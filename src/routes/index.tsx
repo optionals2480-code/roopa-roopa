@@ -244,10 +244,45 @@ function SurpriseSection() {
 
 function Footer() {
   return (
-    <footer className="bg-foreground text-background py-12 px-6 text-center">
-      <div className="flex justify-center mb-4"><Duck size={50} /></div>
-      <p className="font-script text-2xl">Made with chaos, ducks, and love — for Roopa.</p>
-      <p className="text-xs uppercase tracking-[0.3em] text-background/50 mt-3">a birthday tribute</p>
+    <footer
+      className="relative min-h-screen flex flex-col justify-end overflow-hidden text-background"
+      style={{ backgroundImage: `url(${roopa2})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+    >
+      {/* gradient veil for legibility */}
+      <div className="absolute inset-0 bg-gradient-to-b from-foreground/30 via-foreground/55 to-foreground/95" />
+
+      {/* floating sparkles & ducks layered on portrait */}
+      <Sparkle className="absolute top-[12%] right-[14%] text-accent animate-twinkle" size={36} />
+      <Sparkle className="absolute top-[28%] left-[10%] text-background animate-twinkle" size={26} />
+      <Sparkle className="absolute top-[45%] right-[8%] text-background animate-twinkle" size={22} />
+      <div className="absolute top-[18%] left-[6%] animate-float opacity-90" style={{ ['--r' as any]: '-10deg' }}>
+        <Duck size={70} />
+      </div>
+      <div className="absolute top-[60%] right-[6%] animate-float opacity-80" style={{ ['--r' as any]: '14deg', animationDelay: '1.2s' }}>
+        <Duck size={90} />
+      </div>
+
+      {/* hero quote over portrait */}
+      <div className="relative z-10 px-6 pt-32 pb-12 text-center">
+        <div className="font-script text-accent text-3xl md:text-4xl mb-3 drop-shadow">
+          to the girl in the black saree —
+        </div>
+        <h2 className="font-display text-background text-[clamp(3rem,9vw,8rem)] leading-[0.85] tracking-tight drop-shadow-lg">
+          STAY GOLDEN,<br /><span className="text-accent">STAY ROOPA.</span>
+        </h2>
+        <p className="mt-6 max-w-xl mx-auto font-script text-2xl md:text-3xl text-background/90">
+          The world is brighter because you laugh in it.
+        </p>
+      </div>
+
+      {/* signature strip */}
+      <div className="relative z-10 border-t-2 border-background/30 backdrop-blur-sm bg-foreground/40 py-8 px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+        <div className="flex items-center gap-3">
+          <Duck size={42} />
+          <p className="font-script text-2xl">Made with chaos, ducks & love — for Roopa.</p>
+        </div>
+        <p className="text-[10px] uppercase tracking-[0.4em] text-background/60">a birthday tribute · [ date tbd ]</p>
+      </div>
     </footer>
   );
 }
