@@ -131,22 +131,9 @@ function QuotesSection() {
         </div>
 
         <div className="space-y-16">
-          {QUOTES.map((q, i) => {
-            const { ref, shown } = useReveal();
-            const left = i % 2 === 0;
-            return (
-              <div
-                key={i}
-                ref={ref}
-                className={`max-w-2xl transition-all duration-1000 ${shown ? 'opacity-100 translate-x-0' : 'opacity-0 ' + (left ? '-translate-x-20' : 'translate-x-20')} ${left ? 'mr-auto text-left' : 'ml-auto text-right'}`}
-              >
-                <p className="font-display text-[clamp(1.8rem,4vw,3.2rem)] leading-[1.05]">
-                  "{q.text}"
-                </p>
-                <p className="font-script text-accent text-2xl mt-4">{q.by}</p>
-              </div>
-            );
-          })}
+          {QUOTES.map((q, i) => (
+            <QuoteCard key={i} text={q.text} by={q.by} left={i % 2 === 0} />
+          ))}
         </div>
       </div>
     </section>
@@ -163,24 +150,9 @@ function Gallery() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 grid-flow-row-dense auto-rows-[180px] md:auto-rows-[220px] gap-4">
-          {PHOTOS.map((p, i) => {
-            const { ref, shown } = useReveal();
-            return (
-              <div
-                key={i}
-                ref={ref}
-                className={`group relative overflow-hidden rounded-xl border-2 border-foreground ${p.span} transition-all duration-700 ${shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
-                style={{ transitionDelay: `${i * 100}ms` }}
-              >
-                <img src={p.src} alt={`Roopa ${i + 1}`} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/30 transition-colors duration-500" />
-                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Duck size={48} />
-                </div>
-                <Sparkle className="absolute bottom-3 left-3 text-background opacity-0 group-hover:opacity-100 animate-twinkle" size={20} />
-              </div>
-            );
-          })}
+          {PHOTOS.map((p, i) => (
+            <PhotoTile key={i} src={p.src} span={p.span} index={i} />
+          ))}
         </div>
       </div>
     </section>
