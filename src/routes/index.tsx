@@ -39,6 +39,41 @@ function useReveal() {
 }
 
 function Hero() {
+  return <HeroInner />;
+}
+
+function QuoteCard({ text, by, left }: { text: string; by: string; left: boolean }) {
+  const { ref, shown } = useReveal();
+  return (
+    <div
+      ref={ref}
+      className={`max-w-2xl transition-all duration-1000 ${shown ? 'opacity-100 translate-x-0' : 'opacity-0 ' + (left ? '-translate-x-20' : 'translate-x-20')} ${left ? 'mr-auto text-left' : 'ml-auto text-right'}`}
+    >
+      <p className="font-display text-[clamp(1.8rem,4vw,3.2rem)] leading-[1.05]">"{text}"</p>
+      <p className="font-script text-accent text-2xl mt-4">{by}</p>
+    </div>
+  );
+}
+
+function PhotoTile({ src, span, index }: { src: string; span: string; index: number }) {
+  const { ref, shown } = useReveal();
+  return (
+    <div
+      ref={ref as any}
+      className={`group relative overflow-hidden rounded-xl border-2 border-foreground ${span} transition-all duration-700 ${shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+      style={{ transitionDelay: `${index * 100}ms` }}
+    >
+      <img src={src} alt={`Roopa ${index + 1}`} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+      <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/30 transition-colors duration-500" />
+      <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+        <Duck size={48} />
+      </div>
+      <Sparkle className="absolute bottom-3 left-3 text-background opacity-0 group-hover:opacity-100 animate-twinkle" size={20} />
+    </div>
+  );
+}
+
+function HeroInner() {
   const word = "ROOPA";
   return (
     <section className="relative min-h-screen overflow-hidden bg-background">
