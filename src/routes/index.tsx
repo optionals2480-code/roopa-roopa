@@ -19,13 +19,6 @@ const QUOTES = [
   { text: "Cheers to the chaos, the laughter, and another year of you.", by: "— with all the love" },
 ];
 
-const PHOTOS = [
-  { src: roopa1, span: "row-span-2" },
-  { src: roopa2, span: "" },
-  { src: roopa3, span: "" },
-  { src: roopa4, span: "row-span-2" },
-];
-
 function useReveal() {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
