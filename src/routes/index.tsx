@@ -19,13 +19,6 @@ const QUOTES = [
   { text: "Cheers to the chaos, the laughter, and another year of you.", by: "— with all the love" },
 ];
 
-const PHOTOS = [
-  { src: roopa1, span: "row-span-2" },
-  { src: roopa2, span: "" },
-  { src: roopa3, span: "" },
-  { src: roopa4, span: "row-span-2" },
-];
-
 function useReveal() {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
@@ -55,20 +48,133 @@ function QuoteCard({ text, by, left }: { text: string; by: string; left: boolean
   );
 }
 
-function PhotoTile({ src, span, index }: { src: string; span: string; index: number }) {
+const CHAPTERS = [
+  {
+    src: roopa1,
+    chapter: "CHAPTER 01",
+    kicker: "the original icon",
+    title: ["EVERY ROOM", "BENDS A LITTLE", "WHEN YOU WALK IN."],
+    accent: "presence",
+    align: "left" as const,
+    tint: "from-foreground/70 via-foreground/30 to-foreground/80",
+    focal: "center 30%",
+  },
+  {
+    src: roopa3,
+    chapter: "CHAPTER 02",
+    kicker: "soft power, loud aura",
+    title: ["A WHOLE MOOD,", "A WHOLE", "GOLDEN HOUR."],
+    accent: "radiance",
+    align: "right" as const,
+    tint: "from-accent/40 via-foreground/30 to-foreground/85",
+    focal: "center 35%",
+  },
+  {
+    src: roopa4,
+    chapter: "CHAPTER 03",
+    kicker: "quiet chaos, loud heart",
+    title: ["THE KIND OF SOUL", "THE UNIVERSE", "WRITES POEMS ABOUT."],
+    accent: "magic",
+    align: "left" as const,
+    tint: "from-foreground/80 via-foreground/30 to-foreground/70",
+    focal: "center 25%",
+  },
+];
+
+function Chapter({ data, index }: { data: typeof CHAPTERS[number]; index: number }) {
   const { ref, shown } = useReveal();
+  const alignLeft = data.align === "left";
   return (
-    <div
+    <section
       ref={ref as any}
-      className={`group relative overflow-hidden rounded-xl border-2 border-foreground ${span} transition-all duration-700 ${shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
-      style={{ transitionDelay: `${index * 100}ms` }}
+      className="relative min-h-screen w-full overflow-hidden flex items-center"
     >
-      <img src={src} alt={`Roopa ${index + 1}`} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-      <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/30 transition-colors duration-500" />
-      <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-        <Duck size={48} />
+      {/* fixed parallax background */}
+      <div
+        className="absolute inset-0 bg-cover bg-no-repeat md:bg-fixed scale-105"
+        style={{ backgroundImage: `url(${data.src})`, backgroundPosition: data.focal }}
+      />
+      {/* gradient veil */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${data.tint}`} />
+      {/* grid overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.07] pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
+        }}
+      />
+
+      {/* sparkles */}
+      <Sparkle className="absolute top-[14%] right-[10%] text-accent animate-twinkle" size={34} />
+      <Sparkle className="absolute bottom-[18%] left-[12%] text-background animate-twinkle" size={26} />
+      <Sparkle className="absolute top-[60%] right-[22%] text-background/80 animate-twinkle" size={18} />
+
+      {/* floating duck */}
+      <div
+        className={`absolute ${alignLeft ? "top-[14%] right-[8%]" : "bottom-[14%] left-[6%]"} animate-float opacity-90`}
+        style={{ ["--r" as any]: alignLeft ? "12deg" : "-14deg" }}
+      >
+        <Duck size={110} />
       </div>
-      <Sparkle className="absolute bottom-3 left-3 text-background opacity-0 group-hover:opacity-100 animate-twinkle" size={20} />
+
+      {/* side chapter rail */}
+      <div className={`hidden md:flex absolute ${alignLeft ? "left-6" : "right-6"} top-1/2 -translate-y-1/2 items-center gap-3 text-background/80`}>
+        <div className="h-24 w-px bg-background/40" />
+        <span className="text-[10px] tracking-[0.4em] uppercase [writing-mode:vertical-rl] rotate-180">
+          {data.chapter} · roopa
+        </span>
+      </div>
+
+      {/* content */}
+      <div className={`relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 ${alignLeft ? "text-left" : "text-right ml-auto"}`}>
+        <div className={`transition-all duration-1000 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+          <div className="inline-flex items-center gap-3 bg-background/10 backdrop-blur-md border border-background/30 px-4 py-2 rounded-full text-background/90 text-xs uppercase tracking-[0.3em] mb-6">
+            <Sparkle size={12} className="text-accent" />
+            {data.chapter}
+          </div>
+          <div className="font-script text-accent text-3xl md:text-4xl mb-4 drop-shadow-lg">
+            {data.kicker}
+          </div>
+          <h2 className="font-display text-background text-[clamp(2.6rem,8vw,7rem)] leading-[0.88] drop-shadow-2xl">
+            {data.title.map((line, i) => (
+              <span
+                key={i}
+                className="block transition-all duration-700"
+                style={{
+                  transitionDelay: `${shown ? 200 + i * 150 : 0}ms`,
+                  transform: shown ? "translateY(0)" : "translateY(40px)",
+                  opacity: shown ? 1 : 0,
+                  color: i === data.title.length - 1 ? "var(--accent)" : undefined,
+                }}
+              >
+                {line}
+              </span>
+            ))}
+          </h2>
+          <div className={`mt-8 flex items-center gap-4 ${alignLeft ? "" : "justify-end"}`}>
+            <div className="h-px w-16 bg-accent" />
+            <span className="font-display text-background/90 tracking-[0.4em] text-sm">
+              {String(index + 1).padStart(2, "0")} / 03 · {data.accent.toUpperCase()}
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Marquee() {
+  const words = ["ROOPA", "✦", "BIRTHDAY GIRL", "✦", "ICON", "✦", "MAIN CHARACTER", "✦", "GOLDEN", "✦"];
+  const loop = [...words, ...words, ...words];
+  return (
+    <div className="relative bg-foreground text-background py-6 overflow-hidden border-y-2 border-accent">
+      <div className="flex gap-10 whitespace-nowrap animate-marquee font-display text-3xl md:text-5xl">
+        {loop.map((w, i) => (
+          <span key={i} className={i % 2 === 0 ? "text-accent" : ""}>{w}</span>
+        ))}
+      </div>
     </div>
   );
 }
@@ -177,20 +283,22 @@ function QuotesSection() {
 
 function Gallery() {
   return (
-    <section className="relative bg-background py-32 px-6 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <div className="font-script text-3xl text-foreground/70 mb-2">memory lane</div>
-          <h2 className="font-display text-foreground text-[clamp(3rem,8vw,7rem)] leading-none">SELF LOVE ERA</h2>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 grid-flow-row-dense auto-rows-[180px] md:auto-rows-[220px] gap-4">
-          {PHOTOS.map((p, i) => (
-            <PhotoTile key={i} src={p.src} span={p.span} index={i} />
-          ))}
-        </div>
-      </div>
-    </section>
+    <>
+      <section className="relative bg-background py-24 px-6 overflow-hidden text-center">
+        <div className="font-script text-3xl text-foreground/70 mb-2">a film in three frames</div>
+        <h2 className="font-display text-foreground text-[clamp(3rem,9vw,8rem)] leading-none">
+          THE ROOPA <span className="text-accent">CINEMATIC</span>
+        </h2>
+        <p className="mt-6 max-w-xl mx-auto text-foreground/70 uppercase tracking-[0.3em] text-xs">
+          scroll slowly — every frame is a love letter
+        </p>
+      </section>
+      <Marquee />
+      {CHAPTERS.map((c, i) => (
+        <Chapter key={i} data={c} index={i} />
+      ))}
+      <Marquee />
+    </>
   );
 }
 
