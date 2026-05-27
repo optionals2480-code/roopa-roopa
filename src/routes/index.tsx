@@ -283,20 +283,22 @@ function QuotesSection() {
 
 function Gallery() {
   return (
-    <section className="relative bg-background py-32 px-6 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <div className="font-script text-3xl text-foreground/70 mb-2">memory lane</div>
-          <h2 className="font-display text-foreground text-[clamp(3rem,8vw,7rem)] leading-none">SELF LOVE ERA</h2>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 grid-flow-row-dense auto-rows-[180px] md:auto-rows-[220px] gap-4">
-          {PHOTOS.map((p, i) => (
-            <PhotoTile key={i} src={p.src} span={p.span} index={i} />
-          ))}
-        </div>
-      </div>
-    </section>
+    <>
+      <section className="relative bg-background py-24 px-6 overflow-hidden text-center">
+        <div className="font-script text-3xl text-foreground/70 mb-2">a film in three frames</div>
+        <h2 className="font-display text-foreground text-[clamp(3rem,9vw,8rem)] leading-none">
+          THE ROOPA <span className="text-accent">CINEMATIC</span>
+        </h2>
+        <p className="mt-6 max-w-xl mx-auto text-foreground/70 uppercase tracking-[0.3em] text-xs">
+          scroll slowly — every frame is a love letter
+        </p>
+      </section>
+      <Marquee />
+      {CHAPTERS.map((c, i) => (
+        <Chapter key={i} data={c} index={i} />
+      ))}
+      <Marquee />
+    </>
   );
 }
 
