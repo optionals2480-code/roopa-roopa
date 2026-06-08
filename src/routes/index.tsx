@@ -87,15 +87,18 @@ function Chapter({ data, index }: { data: typeof CHAPTERS[number]; index: number
   return (
     <section
       ref={ref as any}
-      className="relative min-h-screen w-full overflow-hidden flex items-center"
+      className="relative w-full overflow-hidden flex items-center min-h-[80vh] md:min-h-screen"
     >
-      {/* fixed parallax background */}
-      <div
-        className="absolute inset-0 bg-cover bg-no-repeat md:bg-fixed scale-105"
-        style={{ backgroundImage: `url(${data.src})`, backgroundPosition: data.focal }}
+      {/* image — full visible, never crops the face */}
+      <img
+        src={data.src}
+        alt={`Roopa — ${data.kicker}`}
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover object-top scale-105 transition-transform duration-[1200ms] will-change-transform"
+        style={{ objectPosition: data.focal }}
       />
       {/* gradient veil */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${data.tint}`} />
+      <div className={`absolute inset-0 bg-gradient-to-b md:bg-gradient-to-br ${data.tint}`} />
       {/* grid overlay */}
       <div
         className="absolute inset-0 opacity-[0.07] pointer-events-none"
@@ -128,16 +131,16 @@ function Chapter({ data, index }: { data: typeof CHAPTERS[number]; index: number
       </div>
 
       {/* content */}
-      <div className={`relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 ${alignLeft ? "text-left" : "text-right ml-auto"}`}>
+      <div className={`relative z-10 w-full max-w-7xl mx-auto px-5 md:px-16 py-24 md:py-0 ${alignLeft ? "text-left" : "md:text-right md:ml-auto text-left"}`}>
         <div className={`transition-all duration-1000 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
           <div className="inline-flex items-center gap-3 bg-background/10 backdrop-blur-md border border-background/30 px-4 py-2 rounded-full text-background/90 text-xs uppercase tracking-[0.3em] mb-6">
             <Sparkle size={12} className="text-accent" />
             {data.chapter}
           </div>
-          <div className="font-script text-accent text-3xl md:text-4xl mb-4 drop-shadow-lg">
+          <div className="font-script text-accent text-2xl md:text-4xl mb-4 drop-shadow-lg">
             {data.kicker}
           </div>
-          <h2 className="font-display text-background text-[clamp(2.6rem,8vw,7rem)] leading-[0.88] drop-shadow-2xl">
+          <h2 className="font-display text-background text-[clamp(2rem,8vw,7rem)] leading-[0.88] drop-shadow-2xl">
             {data.title.map((line, i) => (
               <span
                 key={i}
