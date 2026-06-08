@@ -185,7 +185,7 @@ function Marquee() {
 function HeroInner() {
   const word = "ROOPA";
   return (
-    <section className="relative min-h-screen overflow-hidden bg-background">
+    <section className="relative min-h-[100svh] overflow-hidden bg-background">
       {/* swoosh */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1200 800" preserveAspectRatio="none">
         <path d="M-100 600 Q 400 300 800 500 T 1400 350" stroke="rgba(255,255,255,0.55)" strokeWidth="2" fill="none" />
@@ -212,50 +212,53 @@ function HeroInner() {
         <Duck size={56} />
       </div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-20">
-        <div className="flex items-center gap-4 md:gap-8">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-[100svh] px-4 py-24 md:py-20">
+        <div className="inline-flex items-center gap-2 bg-foreground text-background px-4 py-1.5 rounded-full text-[10px] md:text-xs uppercase tracking-[0.35em] mb-6 animate-pop">
+          <Sparkle size={12} /> a celebration of you <Sparkle size={12} />
+        </div>
+        <div className="flex items-center gap-3 md:gap-8">
           <div className="hidden md:block font-display text-foreground text-[clamp(3rem,8vw,8rem)] leading-none [writing-mode:vertical-rl] rotate-180 animate-letter">
             HAPPY
           </div>
-          <div className="md:hidden font-display text-foreground text-[clamp(3rem,12vw,5rem)] leading-none animate-letter">
+          <div className="md:hidden font-display text-foreground text-[clamp(2.5rem,11vw,5rem)] leading-none animate-letter">
             HAPPY
           </div>
 
           <div className="flex flex-col items-center">
-            <h1 className="font-display text-foreground text-[clamp(4.5rem,18vw,14rem)] leading-[0.85] flex">
+            <h1 className="font-display text-foreground text-[clamp(3.5rem,18vw,14rem)] leading-[0.85] flex">
               {word.split("").map((l, i) => (
-                <span key={i} className="inline-block animate-letter" style={{ animationDelay: `${i * 0.08}s` }}>
+                <span key={i} className="inline-block animate-letter hover:text-accent transition-colors hover:-translate-y-2 duration-300" style={{ animationDelay: `${i * 0.08}s` }}>
                   {l}
                 </span>
               ))}
             </h1>
-            <div className="font-display text-foreground text-[clamp(2.5rem,9vw,7rem)] leading-none -mt-2 animate-letter" style={{ animationDelay: '0.6s' }}>
+            <div className="font-display text-shimmer text-[clamp(2.5rem,9vw,7rem)] leading-none -mt-2 animate-letter" style={{ animationDelay: '0.6s' }}>
               DAY
             </div>
           </div>
         </div>
 
-        <p className="mt-10 max-w-xl text-center font-script text-2xl md:text-3xl text-foreground/85">
-          Showing up with a thousand surprises. Checkmate — ready to win your heart.
+        <p className="mt-8 md:mt-10 max-w-xl text-center font-script text-xl md:text-3xl text-foreground/85 px-2">
+          today the world throws confetti, the ducks line up, and the sun shows up just to clap for you. happy roopa day, icon.
         </p>
 
-        <div className="mt-8 flex items-center gap-3 text-foreground/70 text-sm uppercase tracking-[0.3em]">
+        <div className="mt-6 md:mt-8 flex items-center gap-3 text-foreground/70 text-xs md:text-sm uppercase tracking-[0.3em]">
           <span>roopa</span><span>•</span><span>est. legendary</span>
         </div>
       </div>
 
       {/* date box */}
-      <div className="absolute bottom-6 right-6 z-20">
-        <div className="border-2 border-foreground/80 bg-background/40 backdrop-blur-sm px-4 py-3 rounded-md">
+      <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6 z-20">
+        <div className="border-2 border-foreground/80 bg-background/60 backdrop-blur-sm px-3 py-2 md:px-4 md:py-3 rounded-md">
           <div className="text-[10px] uppercase tracking-[0.3em] text-foreground/70">The Big Day</div>
-          <div className="font-display text-foreground text-2xl mt-1">[ DATE TBD ]</div>
+          <div className="font-display text-foreground text-xl md:text-2xl mt-1">[ DATE TBD ]</div>
         </div>
       </div>
 
       {/* socials */}
-      <div className="absolute bottom-6 left-6 z-20 flex gap-3 text-foreground/80">
+      <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-20 flex gap-2 md:gap-3 text-foreground/80">
         {['IG', 'X', 'FB'].map((s) => (
-          <div key={s} className="w-9 h-9 rounded-full border-2 border-foreground/70 flex items-center justify-center text-xs font-bold hover:bg-foreground hover:text-background transition-colors cursor-pointer">{s}</div>
+          <div key={s} className="w-8 h-8 md:w-9 md:h-9 rounded-full border-2 border-foreground/70 flex items-center justify-center text-[10px] md:text-xs font-bold hover:bg-foreground hover:text-background hover:scale-110 transition-all cursor-pointer">{s}</div>
         ))}
       </div>
     </section>
