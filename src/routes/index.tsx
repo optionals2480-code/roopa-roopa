@@ -359,9 +359,15 @@ function SurpriseSection() {
 function Footer() {
   return (
     <footer
-      className="relative min-h-screen flex flex-col justify-end overflow-hidden text-background"
-      style={{ backgroundImage: `url(${roopa2})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      className="relative min-h-[100svh] flex flex-col justify-end overflow-hidden text-background"
     >
+      {/* full image — top focal so face is visible on every device */}
+      <img
+        src={roopa2}
+        alt="Roopa — black saree portrait"
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover object-top"
+      />
       {/* gradient veil for legibility */}
       <div className="absolute inset-0 bg-gradient-to-b from-foreground/30 via-foreground/55 to-foreground/95" />
 
@@ -377,23 +383,23 @@ function Footer() {
       </div>
 
       {/* hero quote over portrait */}
-      <div className="relative z-10 px-6 pt-32 pb-12 text-center">
-        <div className="font-script text-accent text-3xl md:text-4xl mb-3 drop-shadow">
+      <div className="relative z-10 px-5 md:px-6 pt-24 md:pt-32 pb-12 text-center">
+        <div className="font-script text-accent text-2xl md:text-4xl mb-3 drop-shadow">
           to the girl in the black saree —
         </div>
-        <h2 className="font-display text-background text-[clamp(3rem,9vw,8rem)] leading-[0.85] tracking-tight drop-shadow-lg">
+        <h2 className="font-display text-background text-[clamp(2.2rem,9vw,8rem)] leading-[0.85] tracking-tight drop-shadow-lg">
           STAY GOLDEN,<br /><span className="text-accent">STAY ROOPA.</span>
         </h2>
-        <p className="mt-6 max-w-xl mx-auto font-script text-2xl md:text-3xl text-background/90">
+        <p className="mt-6 max-w-xl mx-auto font-script text-xl md:text-3xl text-background/90 px-2">
           The world is brighter because you laugh in it.
         </p>
       </div>
 
       {/* signature strip */}
-      <div className="relative z-10 border-t-2 border-background/30 backdrop-blur-sm bg-foreground/40 py-8 px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+      <div className="relative z-10 border-t-2 border-background/30 backdrop-blur-sm bg-foreground/50 py-6 md:py-8 px-5 md:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
         <div className="flex items-center gap-3">
-          <Duck size={42} />
-          <p className="font-script text-2xl">Made with chaos, ducks & love — for Roopa.</p>
+          <div className="animate-wiggle"><Duck size={42} /></div>
+          <p className="font-script text-xl md:text-2xl">Made with chaos, ducks & love — for Roopa.</p>
         </div>
         <p className="text-[10px] uppercase tracking-[0.4em] text-background/60">a birthday tribute · [ date tbd ]</p>
       </div>
