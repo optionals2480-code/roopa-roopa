@@ -360,31 +360,34 @@ function SurpriseSection() {
 function Footer() {
   return (
     <footer
-      className="relative min-h-[100svh] flex flex-col justify-end overflow-hidden text-background"
+      className="relative flex flex-col overflow-hidden text-background bg-foreground"
     >
-      {/* full image — top focal so face is visible on every device */}
-      <img
-        src={roopa2}
-        alt="Roopa — black saree portrait"
-        loading="lazy"
-        className="absolute inset-0 w-full h-full object-cover object-top"
-      />
-      {/* gradient veil for legibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-foreground/30 via-foreground/55 to-foreground/95" />
+      {/* full portrait — never cropped */}
+      <div className="relative w-full bg-foreground">
+        <img
+          src={roopa2}
+          alt="Roopa — black saree portrait"
+          loading="lazy"
+          className="block w-full h-auto max-h-none object-contain mx-auto"
+        />
+        {/* subtle vignette only at edges, never covering face */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-foreground to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-foreground via-foreground/70 to-transparent" />
 
-      {/* floating sparkles & ducks layered on portrait */}
-      <Sparkle className="absolute top-[12%] right-[14%] text-accent animate-twinkle" size={36} />
-      <Sparkle className="absolute top-[28%] left-[10%] text-background animate-twinkle" size={26} />
-      <Sparkle className="absolute top-[45%] right-[8%] text-background animate-twinkle" size={22} />
-      <div className="absolute top-[18%] left-[6%] animate-float opacity-90" style={{ ['--r' as any]: '-10deg' }}>
-        <Duck size={70} />
-      </div>
-      <div className="absolute top-[60%] right-[6%] animate-float opacity-80" style={{ ['--r' as any]: '14deg', animationDelay: '1.2s' }}>
-        <Duck size={90} />
+        {/* sparkles on the portrait edges only */}
+        <Sparkle className="absolute top-[6%] right-[6%] text-accent animate-twinkle" size={32} />
+        <Sparkle className="absolute top-[12%] left-[6%] text-background animate-twinkle" size={22} />
+        <Sparkle className="absolute bottom-[10%] right-[10%] text-accent animate-twinkle" size={26} />
+        <div className="absolute top-[6%] left-[3%] animate-float opacity-90" style={{ ['--r' as any]: '-10deg' }}>
+          <Duck size={56} />
+        </div>
+        <div className="absolute bottom-[14%] right-[3%] animate-float opacity-90" style={{ ['--r' as any]: '14deg', animationDelay: '1.2s' }}>
+          <Duck size={70} />
+        </div>
       </div>
 
-      {/* hero quote over portrait */}
-      <div className="relative z-10 px-5 md:px-6 pt-24 md:pt-32 pb-12 text-center">
+      {/* hero quote under portrait */}
+      <div className="relative z-10 px-5 md:px-6 pt-16 md:pt-20 pb-12 text-center bg-foreground">
         <div className="font-script text-accent text-2xl md:text-4xl mb-3 drop-shadow">
           to the girl in the black saree —
         </div>
