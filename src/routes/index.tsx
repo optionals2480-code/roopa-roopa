@@ -40,10 +40,10 @@ function QuoteCard({ text, by, left }: { text: string; by: string; left: boolean
   return (
     <div
       ref={ref}
-      className={`max-w-2xl transition-all duration-1000 ${shown ? 'opacity-100 translate-x-0' : 'opacity-0 ' + (left ? '-translate-x-20' : 'translate-x-20')} ${left ? 'mr-auto text-left' : 'ml-auto text-right'}`}
+      className={`max-w-2xl transition-all duration-1000 ${shown ? 'opacity-100 translate-x-0' : 'opacity-0 ' + (left ? '-translate-x-20' : 'translate-x-20')} ${left ? 'mr-auto text-left' : 'md:ml-auto md:text-right text-left'}`}
     >
-      <p className="font-display text-[clamp(1.8rem,4vw,3.2rem)] leading-[1.05]">"{text}"</p>
-      <p className="font-script text-accent text-2xl mt-4">{by}</p>
+      <p className="font-display text-[clamp(1.4rem,4vw,3.2rem)] leading-[1.05]">"{text}"</p>
+      <p className="font-script text-accent text-xl md:text-2xl mt-3 md:mt-4">{by}</p>
     </div>
   );
 }
@@ -87,15 +87,18 @@ function Chapter({ data, index }: { data: typeof CHAPTERS[number]; index: number
   return (
     <section
       ref={ref as any}
-      className="relative min-h-screen w-full overflow-hidden flex items-center"
+      className="relative w-full overflow-hidden flex items-center min-h-[80vh] md:min-h-screen"
     >
-      {/* fixed parallax background */}
-      <div
-        className="absolute inset-0 bg-cover bg-no-repeat md:bg-fixed scale-105"
-        style={{ backgroundImage: `url(${data.src})`, backgroundPosition: data.focal }}
+      {/* image — full visible, never crops the face */}
+      <img
+        src={data.src}
+        alt={`Roopa — ${data.kicker}`}
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover object-top scale-105 transition-transform duration-[1200ms] will-change-transform"
+        style={{ objectPosition: data.focal }}
       />
       {/* gradient veil */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${data.tint}`} />
+      <div className={`absolute inset-0 bg-gradient-to-b md:bg-gradient-to-br ${data.tint}`} />
       {/* grid overlay */}
       <div
         className="absolute inset-0 opacity-[0.07] pointer-events-none"
@@ -128,16 +131,16 @@ function Chapter({ data, index }: { data: typeof CHAPTERS[number]; index: number
       </div>
 
       {/* content */}
-      <div className={`relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 ${alignLeft ? "text-left" : "text-right ml-auto"}`}>
+      <div className={`relative z-10 w-full max-w-7xl mx-auto px-5 md:px-16 py-24 md:py-0 ${alignLeft ? "text-left" : "md:text-right md:ml-auto text-left"}`}>
         <div className={`transition-all duration-1000 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
           <div className="inline-flex items-center gap-3 bg-background/10 backdrop-blur-md border border-background/30 px-4 py-2 rounded-full text-background/90 text-xs uppercase tracking-[0.3em] mb-6">
             <Sparkle size={12} className="text-accent" />
             {data.chapter}
           </div>
-          <div className="font-script text-accent text-3xl md:text-4xl mb-4 drop-shadow-lg">
+          <div className="font-script text-accent text-2xl md:text-4xl mb-4 drop-shadow-lg">
             {data.kicker}
           </div>
-          <h2 className="font-display text-background text-[clamp(2.6rem,8vw,7rem)] leading-[0.88] drop-shadow-2xl">
+          <h2 className="font-display text-background text-[clamp(2rem,8vw,7rem)] leading-[0.88] drop-shadow-2xl">
             {data.title.map((line, i) => (
               <span
                 key={i}
@@ -182,7 +185,7 @@ function Marquee() {
 function HeroInner() {
   const word = "ROOPA";
   return (
-    <section className="relative min-h-screen overflow-hidden bg-background">
+    <section className="relative min-h-[100svh] overflow-hidden bg-background">
       {/* swoosh */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1200 800" preserveAspectRatio="none">
         <path d="M-100 600 Q 400 300 800 500 T 1400 350" stroke="rgba(255,255,255,0.55)" strokeWidth="2" fill="none" />
@@ -209,50 +212,53 @@ function HeroInner() {
         <Duck size={56} />
       </div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-20">
-        <div className="flex items-center gap-4 md:gap-8">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-[100svh] px-4 py-24 md:py-20">
+        <div className="inline-flex items-center gap-2 bg-foreground text-background px-4 py-1.5 rounded-full text-[10px] md:text-xs uppercase tracking-[0.35em] mb-6 animate-pop">
+          <Sparkle size={12} /> a celebration of you <Sparkle size={12} />
+        </div>
+        <div className="flex items-center gap-3 md:gap-8">
           <div className="hidden md:block font-display text-foreground text-[clamp(3rem,8vw,8rem)] leading-none [writing-mode:vertical-rl] rotate-180 animate-letter">
             HAPPY
           </div>
-          <div className="md:hidden font-display text-foreground text-[clamp(3rem,12vw,5rem)] leading-none animate-letter">
+          <div className="md:hidden font-display text-foreground text-[clamp(2.5rem,11vw,5rem)] leading-none animate-letter">
             HAPPY
           </div>
 
           <div className="flex flex-col items-center">
-            <h1 className="font-display text-foreground text-[clamp(4.5rem,18vw,14rem)] leading-[0.85] flex">
+            <h1 className="font-display text-foreground text-[clamp(3.5rem,18vw,14rem)] leading-[0.85] flex">
               {word.split("").map((l, i) => (
-                <span key={i} className="inline-block animate-letter" style={{ animationDelay: `${i * 0.08}s` }}>
+                <span key={i} className="inline-block animate-letter hover:text-accent transition-colors hover:-translate-y-2 duration-300" style={{ animationDelay: `${i * 0.08}s` }}>
                   {l}
                 </span>
               ))}
             </h1>
-            <div className="font-display text-foreground text-[clamp(2.5rem,9vw,7rem)] leading-none -mt-2 animate-letter" style={{ animationDelay: '0.6s' }}>
+            <div className="font-display text-shimmer text-[clamp(2.5rem,9vw,7rem)] leading-none -mt-2 animate-letter" style={{ animationDelay: '0.6s' }}>
               DAY
             </div>
           </div>
         </div>
 
-        <p className="mt-10 max-w-xl text-center font-script text-2xl md:text-3xl text-foreground/85">
-          Showing up with a thousand surprises. Checkmate — ready to win your heart.
+        <p className="mt-8 md:mt-10 max-w-xl text-center font-script text-xl md:text-3xl text-foreground/85 px-2">
+          today the world throws confetti, the ducks line up, and the sun shows up just to clap for you. happy roopa day, icon.
         </p>
 
-        <div className="mt-8 flex items-center gap-3 text-foreground/70 text-sm uppercase tracking-[0.3em]">
+        <div className="mt-6 md:mt-8 flex items-center gap-3 text-foreground/70 text-xs md:text-sm uppercase tracking-[0.3em]">
           <span>roopa</span><span>•</span><span>est. legendary</span>
         </div>
       </div>
 
       {/* date box */}
-      <div className="absolute bottom-6 right-6 z-20">
-        <div className="border-2 border-foreground/80 bg-background/40 backdrop-blur-sm px-4 py-3 rounded-md">
+      <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6 z-20">
+        <div className="border-2 border-foreground/80 bg-background/60 backdrop-blur-sm px-3 py-2 md:px-4 md:py-3 rounded-md">
           <div className="text-[10px] uppercase tracking-[0.3em] text-foreground/70">The Big Day</div>
-          <div className="font-display text-foreground text-2xl mt-1">[ DATE TBD ]</div>
+          <div className="font-display text-foreground text-xl md:text-2xl mt-1">[ DATE TBD ]</div>
         </div>
       </div>
 
       {/* socials */}
-      <div className="absolute bottom-6 left-6 z-20 flex gap-3 text-foreground/80">
+      <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-20 flex gap-2 md:gap-3 text-foreground/80">
         {['IG', 'X', 'FB'].map((s) => (
-          <div key={s} className="w-9 h-9 rounded-full border-2 border-foreground/70 flex items-center justify-center text-xs font-bold hover:bg-foreground hover:text-background transition-colors cursor-pointer">{s}</div>
+          <div key={s} className="w-8 h-8 md:w-9 md:h-9 rounded-full border-2 border-foreground/70 flex items-center justify-center text-[10px] md:text-xs font-bold hover:bg-foreground hover:text-background hover:scale-110 transition-all cursor-pointer">{s}</div>
         ))}
       </div>
     </section>
@@ -261,17 +267,17 @@ function HeroInner() {
 
 function QuotesSection() {
   return (
-    <section className="relative bg-foreground text-background py-32 px-6 overflow-hidden">
+    <section className="relative bg-foreground text-background py-20 md:py-32 px-5 md:px-6 overflow-hidden">
       <Sparkle className="absolute top-10 right-20 text-accent animate-twinkle" size={32} />
       <Sparkle className="absolute bottom-20 left-12 text-background animate-twinkle" size={24} />
 
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-20">
-          <div className="font-script text-accent text-3xl mb-2">a few words</div>
-          <h2 className="font-display text-[clamp(3rem,8vw,7rem)] leading-none">FOR YOU, ROOPA.</h2>
+        <div className="text-center mb-14 md:mb-20">
+          <div className="font-script text-accent text-2xl md:text-3xl mb-2">a few words</div>
+          <h2 className="font-display text-[clamp(2.2rem,8vw,7rem)] leading-none">FOR YOU, ROOPA.</h2>
         </div>
 
-        <div className="space-y-16">
+        <div className="space-y-10 md:space-y-16">
           {QUOTES.map((q, i) => (
             <QuoteCard key={i} text={q.text} by={q.by} left={i % 2 === 0} />
           ))}
@@ -353,9 +359,15 @@ function SurpriseSection() {
 function Footer() {
   return (
     <footer
-      className="relative min-h-screen flex flex-col justify-end overflow-hidden text-background"
-      style={{ backgroundImage: `url(${roopa2})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      className="relative min-h-[100svh] flex flex-col justify-end overflow-hidden text-background"
     >
+      {/* full image — top focal so face is visible on every device */}
+      <img
+        src={roopa2}
+        alt="Roopa — black saree portrait"
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover object-top"
+      />
       {/* gradient veil for legibility */}
       <div className="absolute inset-0 bg-gradient-to-b from-foreground/30 via-foreground/55 to-foreground/95" />
 
@@ -371,23 +383,23 @@ function Footer() {
       </div>
 
       {/* hero quote over portrait */}
-      <div className="relative z-10 px-6 pt-32 pb-12 text-center">
-        <div className="font-script text-accent text-3xl md:text-4xl mb-3 drop-shadow">
+      <div className="relative z-10 px-5 md:px-6 pt-24 md:pt-32 pb-12 text-center">
+        <div className="font-script text-accent text-2xl md:text-4xl mb-3 drop-shadow">
           to the girl in the black saree —
         </div>
-        <h2 className="font-display text-background text-[clamp(3rem,9vw,8rem)] leading-[0.85] tracking-tight drop-shadow-lg">
+        <h2 className="font-display text-background text-[clamp(2.2rem,9vw,8rem)] leading-[0.85] tracking-tight drop-shadow-lg">
           STAY GOLDEN,<br /><span className="text-accent">STAY ROOPA.</span>
         </h2>
-        <p className="mt-6 max-w-xl mx-auto font-script text-2xl md:text-3xl text-background/90">
+        <p className="mt-6 max-w-xl mx-auto font-script text-xl md:text-3xl text-background/90 px-2">
           The world is brighter because you laugh in it.
         </p>
       </div>
 
       {/* signature strip */}
-      <div className="relative z-10 border-t-2 border-background/30 backdrop-blur-sm bg-foreground/40 py-8 px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+      <div className="relative z-10 border-t-2 border-background/30 backdrop-blur-sm bg-foreground/50 py-6 md:py-8 px-5 md:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
         <div className="flex items-center gap-3">
-          <Duck size={42} />
-          <p className="font-script text-2xl">Made with chaos, ducks & love — for Roopa.</p>
+          <div className="animate-wiggle"><Duck size={42} /></div>
+          <p className="font-script text-xl md:text-2xl">Made with chaos, ducks & love — for Roopa.</p>
         </div>
         <p className="text-[10px] uppercase tracking-[0.4em] text-background/60">a birthday tribute · [ date tbd ]</p>
       </div>
