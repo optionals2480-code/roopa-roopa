@@ -357,6 +357,104 @@ function SurpriseSection() {
   );
 }
 
+function ChildhoodVault() {
+  const [code, setCode] = useState(["", "", "", ""]);
+  const [unlocked, setUnlocked] = useState(false);
+  const [shake, setShake] = useState(false);
+  const refs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
+
+  const setDigit = (i: number, v: string) => {
+    const d = v.replace(/\D/g, "").slice(-1);
+    const next = [...code];
+    next[i] = d;
+    setCode(next);
+    if (d && i < 3) refs[i + 1].current?.focus();
+    if (next.every((x) => x !== "")) {
+      if (next.join("") === "0000") {
+        setTimeout(() => {
+          setUnlocked(true);
+          confetti({ particleCount: 140, spread: 100, origin: { y: 0.5 }, colors: ['#FFDD00','#FF8C00','#fff','#1a1a1a'] });
+        }, 200);
+      } else {
+        setShake(true);
+        setTimeout(() => { setShake(false); setCode(["","","",""]); refs[0].current?.focus(); }, 600);
+      }
+    }
+  };
+
+  return (
+    <section className="relative bg-background py-24 md:py-32 px-5 md:px-6 overflow-hidden border-y-2 border-foreground">
+      <Sparkle className="absolute top-12 left-10 text-accent animate-twinkle" size={28} />
+      <Sparkle className="absolute bottom-12 right-12 text-foreground animate-twinkle" size={32} />
+
+      <div className="max-w-3xl mx-auto text-center">
+        <div className="font-script text-accent text-2xl md:text-3xl mb-2">a secret chapter</div>
+        <h2 className="font-display text-foreground text-[clamp(2.2rem,8vw,6rem)] leading-none">
+          THE CHILDHOOD <span className="text-accent">VAULT</span>
+        </h2>
+        <p className="mt-4 text-foreground/70 uppercase tracking-[0.3em] text-xs">
+          {unlocked ? "vault open · welcome back, little roopa" : "enter the 4-digit passcode to unlock · hint: four zeros"}
+        </p>
+
+        {!unlocked ? (
+          <div className={`mt-10 flex flex-col items-center gap-6 ${shake ? 'animate-wiggle' : ''}`}>
+            <div className="relative">
+              {/* lock icon */}
+              <div className="mx-auto w-20 h-20 rounded-2xl border-4 border-foreground bg-accent flex items-center justify-center shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-foreground">
+                  <rect x="4" y="11" width="16" height="10" rx="2" />
+                  <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+                </svg>
+              </div>
+            </div>
+            <div className="flex gap-3 md:gap-4">
+              {code.map((d, i) => (
+                <input
+                  key={i}
+                  ref={refs[i]}
+                  inputMode="numeric"
+                  maxLength={1}
+                  value={d}
+                  onChange={(e) => setDigit(i, e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Backspace" && !code[i] && i > 0) refs[i - 1].current?.focus();
+                  }}
+                  className="w-14 h-16 md:w-16 md:h-20 text-center font-display text-3xl md:text-4xl border-4 border-foreground bg-background text-foreground rounded-xl focus:outline-none focus:border-accent focus:scale-110 transition-all shadow-[4px_4px_0_0_rgba(0,0,0,1)]"
+                />
+              ))}
+            </div>
+            <p className="text-xs uppercase tracking-[0.3em] text-foreground/50">tap each box · type 0 0 0 0</p>
+          </div>
+        ) : (
+          <div className="mt-10 animate-pop">
+            <div className="relative inline-block group">
+              <div className="absolute -inset-3 bg-accent rounded-3xl rotate-[-3deg]" />
+              <div className="absolute -inset-3 bg-foreground rounded-3xl rotate-[2deg] opacity-80" />
+              <img
+                src={roopaChildhood.url}
+                alt="Little Roopa"
+                className="relative rounded-2xl border-4 border-foreground max-w-xs md:max-w-sm w-full shadow-[10px_10px_0_0_rgba(0,0,0,1)] group-hover:rotate-1 transition-transform"
+              />
+              <div className="absolute -top-4 -right-4 bg-accent text-foreground font-display text-lg px-4 py-2 rounded-full border-2 border-foreground rotate-12 shadow-[4px_4px_0_0_rgba(0,0,0,1)]">
+                ✦ tiny icon ✦
+              </div>
+            </div>
+            <p className="mt-8 font-script text-2xl md:text-3xl text-foreground/85 max-w-lg mx-auto">
+              the same eyes, the same fire — just smaller hands and bigger dreams.
+            </p>
+            <button
+              onClick={() => { setUnlocked(false); setCode(["","","",""]); }}
+              className="mt-6 text-xs uppercase tracking-[0.3em] text-foreground/60 underline hover:text-foreground"
+            >
+              re-lock the vault
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   return (
     <footer
