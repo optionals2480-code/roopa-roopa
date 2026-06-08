@@ -6,6 +6,7 @@ import roopa1 from "@/assets/roopa-1.jpg";
 import roopa2 from "@/assets/roopa-2.jpg";
 import roopa3 from "@/assets/roopa-3.jpg";
 import roopa4 from "@/assets/roopa-4.jpg";
+import roopaChildhood from "@/assets/roopa-childhood.png.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
