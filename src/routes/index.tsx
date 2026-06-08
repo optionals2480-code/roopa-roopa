@@ -40,10 +40,10 @@ function QuoteCard({ text, by, left }: { text: string; by: string; left: boolean
   return (
     <div
       ref={ref}
-      className={`max-w-2xl transition-all duration-1000 ${shown ? 'opacity-100 translate-x-0' : 'opacity-0 ' + (left ? '-translate-x-20' : 'translate-x-20')} ${left ? 'mr-auto text-left' : 'ml-auto text-right'}`}
+      className={`max-w-2xl transition-all duration-1000 ${shown ? 'opacity-100 translate-x-0' : 'opacity-0 ' + (left ? '-translate-x-20' : 'translate-x-20')} ${left ? 'mr-auto text-left' : 'md:ml-auto md:text-right text-left'}`}
     >
-      <p className="font-display text-[clamp(1.8rem,4vw,3.2rem)] leading-[1.05]">"{text}"</p>
-      <p className="font-script text-accent text-2xl mt-4">{by}</p>
+      <p className="font-display text-[clamp(1.4rem,4vw,3.2rem)] leading-[1.05]">"{text}"</p>
+      <p className="font-script text-accent text-xl md:text-2xl mt-3 md:mt-4">{by}</p>
     </div>
   );
 }
@@ -267,17 +267,17 @@ function HeroInner() {
 
 function QuotesSection() {
   return (
-    <section className="relative bg-foreground text-background py-32 px-6 overflow-hidden">
+    <section className="relative bg-foreground text-background py-20 md:py-32 px-5 md:px-6 overflow-hidden">
       <Sparkle className="absolute top-10 right-20 text-accent animate-twinkle" size={32} />
       <Sparkle className="absolute bottom-20 left-12 text-background animate-twinkle" size={24} />
 
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-20">
-          <div className="font-script text-accent text-3xl mb-2">a few words</div>
-          <h2 className="font-display text-[clamp(3rem,8vw,7rem)] leading-none">FOR YOU, ROOPA.</h2>
+        <div className="text-center mb-14 md:mb-20">
+          <div className="font-script text-accent text-2xl md:text-3xl mb-2">a few words</div>
+          <h2 className="font-display text-[clamp(2.2rem,8vw,7rem)] leading-none">FOR YOU, ROOPA.</h2>
         </div>
 
-        <div className="space-y-16">
+        <div className="space-y-10 md:space-y-16">
           {QUOTES.map((q, i) => (
             <QuoteCard key={i} text={q.text} by={q.by} left={i % 2 === 0} />
           ))}
