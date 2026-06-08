@@ -418,6 +418,7 @@ function Index() {
       <QuotesSection />
       <Gallery />
       <SurpriseSection />
+      <ChildhoodVault />
       <Footer />
     </main>
   );
