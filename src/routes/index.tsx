@@ -6,6 +6,7 @@ import roopa1 from "@/assets/roopa-1.jpg";
 import roopa2 from "@/assets/roopa-2.jpg";
 import roopa3 from "@/assets/roopa-3.jpg";
 import roopa4 from "@/assets/roopa-4.jpg";
+import roopaChildhood from "@/assets/roopa-childhood.png.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -356,34 +357,135 @@ function SurpriseSection() {
   );
 }
 
+function ChildhoodVault() {
+  const [code, setCode] = useState(["", "", "", ""]);
+  const [unlocked, setUnlocked] = useState(false);
+  const [shake, setShake] = useState(false);
+  const refs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
+
+  const setDigit = (i: number, v: string) => {
+    const d = v.replace(/\D/g, "").slice(-1);
+    const next = [...code];
+    next[i] = d;
+    setCode(next);
+    if (d && i < 3) refs[i + 1].current?.focus();
+    if (next.every((x) => x !== "")) {
+      if (next.join("") === "0000") {
+        setTimeout(() => {
+          setUnlocked(true);
+          confetti({ particleCount: 140, spread: 100, origin: { y: 0.5 }, colors: ['#FFDD00','#FF8C00','#fff','#1a1a1a'] });
+        }, 200);
+      } else {
+        setShake(true);
+        setTimeout(() => { setShake(false); setCode(["","","",""]); refs[0].current?.focus(); }, 600);
+      }
+    }
+  };
+
+  return (
+    <section className="relative bg-background py-24 md:py-32 px-5 md:px-6 overflow-hidden border-y-2 border-foreground">
+      <Sparkle className="absolute top-12 left-10 text-accent animate-twinkle" size={28} />
+      <Sparkle className="absolute bottom-12 right-12 text-foreground animate-twinkle" size={32} />
+
+      <div className="max-w-3xl mx-auto text-center">
+        <div className="font-script text-accent text-2xl md:text-3xl mb-2">a secret chapter</div>
+        <h2 className="font-display text-foreground text-[clamp(2.2rem,8vw,6rem)] leading-none">
+          THE CHILDHOOD <span className="text-accent">VAULT</span>
+        </h2>
+        <p className="mt-4 text-foreground/70 uppercase tracking-[0.3em] text-xs">
+          {unlocked ? "vault open · welcome back, little roopa" : "enter the 4-digit passcode to unlock · hint: four zeros"}
+        </p>
+
+        {!unlocked ? (
+          <div className={`mt-10 flex flex-col items-center gap-6 ${shake ? 'animate-wiggle' : ''}`}>
+            <div className="relative">
+              {/* lock icon */}
+              <div className="mx-auto w-20 h-20 rounded-2xl border-4 border-foreground bg-accent flex items-center justify-center shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-foreground">
+                  <rect x="4" y="11" width="16" height="10" rx="2" />
+                  <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+                </svg>
+              </div>
+            </div>
+            <div className="flex gap-3 md:gap-4">
+              {code.map((d, i) => (
+                <input
+                  key={i}
+                  ref={refs[i]}
+                  inputMode="numeric"
+                  maxLength={1}
+                  value={d}
+                  onChange={(e) => setDigit(i, e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Backspace" && !code[i] && i > 0) refs[i - 1].current?.focus();
+                  }}
+                  className="w-14 h-16 md:w-16 md:h-20 text-center font-display text-3xl md:text-4xl border-4 border-foreground bg-background text-foreground rounded-xl focus:outline-none focus:border-accent focus:scale-110 transition-all shadow-[4px_4px_0_0_rgba(0,0,0,1)]"
+                />
+              ))}
+            </div>
+            <p className="text-xs uppercase tracking-[0.3em] text-foreground/50">tap each box · type 0 0 0 0</p>
+          </div>
+        ) : (
+          <div className="mt-10 animate-pop">
+            <div className="relative inline-block group">
+              <div className="absolute -inset-3 bg-accent rounded-3xl rotate-[-3deg]" />
+              <div className="absolute -inset-3 bg-foreground rounded-3xl rotate-[2deg] opacity-80" />
+              <img
+                src={roopaChildhood.url}
+                alt="Little Roopa"
+                className="relative rounded-2xl border-4 border-foreground max-w-xs md:max-w-sm w-full shadow-[10px_10px_0_0_rgba(0,0,0,1)] group-hover:rotate-1 transition-transform"
+              />
+              <div className="absolute -top-4 -right-4 bg-accent text-foreground font-display text-lg px-4 py-2 rounded-full border-2 border-foreground rotate-12 shadow-[4px_4px_0_0_rgba(0,0,0,1)]">
+                ✦ tiny icon ✦
+              </div>
+            </div>
+            <p className="mt-8 font-script text-2xl md:text-3xl text-foreground/85 max-w-lg mx-auto">
+              the same eyes, the same fire — just smaller hands and bigger dreams.
+            </p>
+            <button
+              onClick={() => { setUnlocked(false); setCode(["","","",""]); }}
+              className="mt-6 text-xs uppercase tracking-[0.3em] text-foreground/60 underline hover:text-foreground"
+            >
+              re-lock the vault
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   return (
     <footer
-      className="relative min-h-[100svh] flex flex-col justify-end overflow-hidden text-background"
+      className="relative flex flex-col overflow-hidden text-background bg-foreground"
     >
-      {/* full image — top focal so face is visible on every device */}
-      <img
-        src={roopa2}
-        alt="Roopa — black saree portrait"
-        loading="lazy"
-        className="absolute inset-0 w-full h-full object-cover object-top"
-      />
-      {/* gradient veil for legibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-foreground/30 via-foreground/55 to-foreground/95" />
+      {/* full portrait — never cropped */}
+      <div className="relative w-full bg-foreground">
+        <img
+          src={roopa2}
+          alt="Roopa — black saree portrait"
+          loading="lazy"
+          className="block w-full h-auto max-h-none object-contain mx-auto"
+        />
+        {/* subtle vignette only at edges, never covering face */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-foreground to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-foreground via-foreground/70 to-transparent" />
 
-      {/* floating sparkles & ducks layered on portrait */}
-      <Sparkle className="absolute top-[12%] right-[14%] text-accent animate-twinkle" size={36} />
-      <Sparkle className="absolute top-[28%] left-[10%] text-background animate-twinkle" size={26} />
-      <Sparkle className="absolute top-[45%] right-[8%] text-background animate-twinkle" size={22} />
-      <div className="absolute top-[18%] left-[6%] animate-float opacity-90" style={{ ['--r' as any]: '-10deg' }}>
-        <Duck size={70} />
-      </div>
-      <div className="absolute top-[60%] right-[6%] animate-float opacity-80" style={{ ['--r' as any]: '14deg', animationDelay: '1.2s' }}>
-        <Duck size={90} />
+        {/* sparkles on the portrait edges only */}
+        <Sparkle className="absolute top-[6%] right-[6%] text-accent animate-twinkle" size={32} />
+        <Sparkle className="absolute top-[12%] left-[6%] text-background animate-twinkle" size={22} />
+        <Sparkle className="absolute bottom-[10%] right-[10%] text-accent animate-twinkle" size={26} />
+        <div className="absolute top-[6%] left-[3%] animate-float opacity-90" style={{ ['--r' as any]: '-10deg' }}>
+          <Duck size={56} />
+        </div>
+        <div className="absolute bottom-[14%] right-[3%] animate-float opacity-90" style={{ ['--r' as any]: '14deg', animationDelay: '1.2s' }}>
+          <Duck size={70} />
+        </div>
       </div>
 
-      {/* hero quote over portrait */}
-      <div className="relative z-10 px-5 md:px-6 pt-24 md:pt-32 pb-12 text-center">
+      {/* hero quote under portrait */}
+      <div className="relative z-10 px-5 md:px-6 pt-16 md:pt-20 pb-12 text-center bg-foreground">
         <div className="font-script text-accent text-2xl md:text-4xl mb-3 drop-shadow">
           to the girl in the black saree —
         </div>
@@ -414,6 +516,7 @@ function Index() {
       <QuotesSection />
       <Gallery />
       <SurpriseSection />
+      <ChildhoodVault />
       <Footer />
     </main>
   );
