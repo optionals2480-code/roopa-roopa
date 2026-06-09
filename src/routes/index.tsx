@@ -7,6 +7,7 @@ import roopa2 from "@/assets/roopa-2.jpg";
 import roopa3 from "@/assets/roopa-3.jpg";
 import roopa4 from "@/assets/roopa-4.jpg";
 import roopaChildhood from "@/assets/roopa-childhood.png.asset.json";
+import roopaMyDay from "@/assets/roopa-myday.png.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -455,6 +456,92 @@ function ChildhoodVault() {
   );
 }
 
+function PolaroidDiary() {
+  const { ref, shown } = useReveal();
+  return (
+    <section
+      ref={ref as any}
+      className="relative overflow-hidden py-24 md:py-32 px-5 md:px-6 bg-background"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 20% 20%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 55%), radial-gradient(circle at 80% 80%, color-mix(in oklab, var(--foreground) 14%, transparent), transparent 60%)",
+      }}
+    >
+      <div
+        className="absolute inset-0 opacity-[0.05] pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
+        }}
+      />
+      <Sparkle className="absolute top-10 left-10 text-accent animate-twinkle" size={28} />
+      <Sparkle className="absolute bottom-12 right-12 text-foreground animate-twinkle" size={32} />
+
+      <div className="max-w-6xl mx-auto text-center mb-14 md:mb-20">
+        <div className="font-script text-accent text-2xl md:text-3xl mb-2">a page from her diary</div>
+        <h2 className="font-display text-foreground text-[clamp(2.2rem,8vw,6.5rem)] leading-none">
+          MY <span className="text-accent">DAY</span>, <br className="md:hidden" /> EVERY DAY.
+        </h2>
+        <p className="mt-4 text-foreground/70 uppercase tracking-[0.3em] text-xs">
+          taped to the wall · ink still wet · ✦ ✦ ✦
+        </p>
+      </div>
+
+      <div
+        className={`relative max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-6 items-center transition-all duration-1000 ${shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+      >
+        <div className="relative mx-auto group" style={{ transform: 'rotate(-5deg)' }}>
+          <div className="absolute -top-4 left-10 w-24 h-6 bg-accent/70 rotate-[-8deg] z-20 shadow-md" />
+          <div className="relative bg-background border border-foreground/10 p-3 pb-16 rounded-sm shadow-[12px_14px_0_0_rgba(0,0,0,0.85)] group-hover:rotate-0 transition-transform duration-500 w-[260px] md:w-[320px]">
+            <img
+              src={roopaMyDay.url}
+              alt="Roopa — soft dream"
+              loading="lazy"
+              className="w-full h-[320px] md:h-[400px] object-cover block"
+              style={{ objectPosition: '15% 35%', filter: 'saturate(1.05) contrast(0.95)' }}
+            />
+            <div className="absolute bottom-4 left-0 right-0 text-center font-script text-foreground/80 text-2xl">
+              dreamy ✿
+            </div>
+          </div>
+        </div>
+
+        <div className="relative mx-auto group" style={{ transform: 'rotate(4deg)' }}>
+          <div className="absolute -top-4 right-10 w-24 h-6 bg-foreground/70 rotate-[6deg] z-20 shadow-md" />
+          <div className="relative bg-background border border-foreground/10 p-3 pb-16 rounded-sm shadow-[12px_14px_0_0_rgba(0,0,0,0.85)] group-hover:rotate-0 transition-transform duration-500 w-[260px] md:w-[340px]">
+            <img
+              src={roopaMyDay.url}
+              alt="Roopa — my day"
+              loading="lazy"
+              className="w-full h-[320px] md:h-[420px] object-cover block"
+              style={{ objectPosition: '70% 30%' }}
+            />
+            <div className="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-2 font-script text-foreground text-3xl">
+              my day <span className="text-accent">♥</span>
+            </div>
+          </div>
+          <div className="absolute -bottom-4 -left-6 bg-accent text-foreground font-display text-sm px-3 py-1.5 rounded-full border-2 border-foreground rotate-[-10deg] shadow-[3px_3px_0_0_rgba(0,0,0,1)] z-20">
+            ✦ golden hour
+          </div>
+          <div className="absolute -top-6 -right-4 animate-float">
+            <Duck size={54} />
+          </div>
+        </div>
+      </div>
+
+      <div className="relative max-w-2xl mx-auto mt-16 md:mt-20 text-center">
+        <p className="font-script text-2xl md:text-4xl text-foreground/85 leading-snug">
+          "some days are just <span className="text-accent">main character days</span> — and roopa, every single one of yours is."
+        </p>
+        <div className="mt-6 inline-flex items-center gap-3 text-foreground/60 text-[10px] uppercase tracking-[0.4em]">
+          <span>logged</span><span>•</span><span>365 / 365</span><span>•</span><span>her day</span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   return (
     <footer
@@ -516,6 +603,7 @@ function Index() {
       <QuotesSection />
       <Gallery />
       <SurpriseSection />
+      <PolaroidDiary />
       <ChildhoodVault />
       <Footer />
     </main>
