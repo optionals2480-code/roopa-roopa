@@ -544,6 +544,98 @@ function PolaroidDiary() {
 }
 
 function Footer() {
+  return <FooterInner />;
+}
+
+function DuoSection() {
+  const { ref, shown } = useReveal();
+  return (
+    <section
+      ref={ref as any}
+      className="relative overflow-hidden min-h-[100svh] flex items-center bg-foreground text-background"
+    >
+      {/* hero image */}
+      <img
+        src={roopaDuo.url}
+        alt="Roopa — two sides, one icon"
+        loading="lazy"
+        className={`absolute inset-0 w-full h-full object-cover object-center transition-transform duration-[1400ms] ${shown ? 'scale-100' : 'scale-110'}`}
+        style={{ objectPosition: 'center 30%' }}
+      />
+      {/* cinematic veils */}
+      <div className="absolute inset-0 bg-gradient-to-b from-foreground/70 via-foreground/20 to-foreground/90" />
+      <div className="absolute inset-0 bg-gradient-to-r from-foreground/60 via-transparent to-foreground/60 mix-blend-multiply" />
+      {/* split line down the middle */}
+      <div className="hidden md:block absolute top-[10%] bottom-[10%] left-1/2 w-px bg-accent/60" />
+      {/* grid */}
+      <div
+        className="absolute inset-0 opacity-[0.08] pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
+      <Sparkle className="absolute top-[10%] left-[8%] text-accent animate-twinkle" size={32} />
+      <Sparkle className="absolute top-[18%] right-[10%] text-background animate-twinkle" size={26} />
+      <Sparkle className="absolute bottom-[14%] left-1/2 -translate-x-1/2 text-accent animate-twinkle" size={22} />
+      <div className="absolute top-[12%] right-[6%] animate-float opacity-90" style={{ ['--r' as any]: '14deg' }}>
+        <Duck size={70} />
+      </div>
+      <div className="absolute bottom-[10%] left-[5%] animate-float opacity-90" style={{ ['--r' as any]: '-12deg', animationDelay: '1s' }}>
+        <Duck size={84} />
+      </div>
+
+      {/* content */}
+      <div className={`relative z-10 w-full max-w-7xl mx-auto px-5 md:px-12 py-24 transition-all duration-1000 ${shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+        <div className="flex flex-col md:flex-row items-stretch justify-between gap-10 md:gap-6">
+          {/* left side label */}
+          <div className="text-left max-w-xs">
+            <div className="inline-flex items-center gap-2 bg-background/15 backdrop-blur-md border border-background/30 px-3 py-1.5 rounded-full text-background/90 text-[10px] uppercase tracking-[0.35em] mb-4">
+              <Sparkle size={10} className="text-accent" /> side a
+            </div>
+            <div className="font-script text-accent text-2xl md:text-3xl mb-2">the giggle</div>
+            <h3 className="font-display text-background text-[clamp(2rem,5vw,3.6rem)] leading-[0.95]">
+              joy in <br /> motion.
+            </h3>
+            <p className="mt-3 text-background/70 text-sm md:text-base max-w-[18ch]">
+              the laugh that fills the whole sky.
+            </p>
+          </div>
+
+          {/* center title */}
+          <div className="text-center self-center">
+            <div className="font-script text-accent text-xl md:text-2xl mb-2">two sides · one icon</div>
+            <h2 className="font-display text-background text-[clamp(2.6rem,11vw,9rem)] leading-[0.85] drop-shadow-2xl">
+              DOUBLE <br /><span className="text-accent">TROUBLE.</span>
+            </h2>
+            <div className="mt-5 inline-flex items-center gap-3 text-background/80 text-[10px] uppercase tracking-[0.4em]">
+              <span className="h-px w-10 bg-accent" />
+              <span>roopa × roopa</span>
+              <span className="h-px w-10 bg-accent" />
+            </div>
+          </div>
+
+          {/* right side label */}
+          <div className="text-left md:text-right max-w-xs md:ml-auto">
+            <div className="inline-flex items-center gap-2 bg-background/15 backdrop-blur-md border border-background/30 px-3 py-1.5 rounded-full text-background/90 text-[10px] uppercase tracking-[0.35em] mb-4">
+              <Sparkle size={10} className="text-accent" /> side b
+            </div>
+            <div className="font-script text-accent text-2xl md:text-3xl mb-2">the glow</div>
+            <h3 className="font-display text-background text-[clamp(2rem,5vw,3.6rem)] leading-[0.95]">
+              soft <br /> sunset soul.
+            </h3>
+            <p className="mt-3 text-background/70 text-sm md:text-base max-w-[18ch] md:ml-auto">
+              the smile that the sky tries to copy.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FooterInner() {
   return (
     <footer
       className="relative flex flex-col overflow-hidden text-background bg-foreground"
