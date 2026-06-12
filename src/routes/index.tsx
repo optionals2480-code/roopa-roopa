@@ -8,6 +8,7 @@ import roopa3 from "@/assets/roopa-3.jpg";
 import roopa4 from "@/assets/roopa-4.jpg";
 import roopaChildhood from "@/assets/roopa-childhood.png.asset.json";
 import roopaMyDay from "@/assets/roopa-myday.png.asset.json";
+import roopaDuo from "@/assets/roopa-duo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -601,6 +602,7 @@ function Index() {
     <main className="grain">
       <Hero />
       <QuotesSection />
+      <DuoSection />
       <Gallery />
       <SurpriseSection />
       <PolaroidDiary />
