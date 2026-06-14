@@ -880,6 +880,7 @@ function Index() {
       <SurpriseSection />
       <PolaroidDiary />
       <PinkMoodSection />
+      <FieldSection />
       <ChildhoodVault />
       <Footer />
     </main>
