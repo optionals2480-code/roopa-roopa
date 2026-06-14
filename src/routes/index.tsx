@@ -10,6 +10,7 @@ import roopaChildhood from "@/assets/roopa-childhood.png.asset.json";
 import roopaMyDay from "@/assets/roopa-myday.png.asset.json";
 import roopaDuo from "@/assets/roopa-duo.png.asset.json";
 import roopaPinkCollage from "@/assets/roopa-pink-collage.jpg.asset.json";
+import roopaField from "@/assets/roopa-field.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
