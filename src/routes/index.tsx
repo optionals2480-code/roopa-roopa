@@ -10,6 +10,7 @@ import roopaChildhood from "@/assets/roopa-childhood.png.asset.json";
 import roopaMyDay from "@/assets/roopa-myday.png.asset.json";
 import roopaDuo from "@/assets/roopa-duo.png.asset.json";
 import roopaPinkCollage from "@/assets/roopa-pink-collage.jpg.asset.json";
+import roopaField from "@/assets/roopa-field.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -641,6 +642,88 @@ function PinkMoodSection() {
   );
 }
 
+function FieldSection() {
+  const { ref, shown } = useReveal();
+  return (
+    <section
+      ref={ref as any}
+      className="relative overflow-hidden min-h-[100svh] flex items-center"
+    >
+      {/* bg — full natural portrait */}
+      <img
+        src={roopaField.url}
+        alt="Roopa — bloom in the wild"
+        loading="lazy"
+        className={`absolute inset-0 w-full h-full object-cover object-center transition-transform duration-[1600ms] ${shown ? 'scale-100' : 'scale-110'}`}
+        style={{ objectPosition: 'center 25%' }}
+      />
+
+      {/* earthy veils — warm & soft */}
+      <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/10 to-foreground/35" />
+      <div className="absolute inset-0 bg-gradient-to-r from-foreground/45 via-transparent to-foreground/45" />
+
+      {/* subtle green tint overlay to match the field */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle at 50% 70%, color-mix(in oklab, oklch(0.55 0.15 140) 25%, transparent), transparent 65%)',
+        }}
+      />
+
+      {/* organic grain dots */}
+      <div
+        className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+        }}
+      />
+
+      {/* sparkles — scattered like fireflies */}
+      <Sparkle className="absolute top-[12%] left-[10%] text-accent animate-twinkle" size={28} />
+      <Sparkle className="absolute top-[22%] right-[14%] text-background animate-twinkle" size={22} />
+      <Sparkle className="absolute bottom-[20%] left-[8%] text-accent animate-twinkle" size={34} />
+      <Sparkle className="absolute bottom-[14%] right-[10%] text-background animate-twinkle" size={26} />
+      <Sparkle className="absolute top-[55%] left-[45%] text-accent/70 animate-twinkle" size={18} />
+
+      {/* floating ducks — like they wandered into the meadow */}
+      <div className="absolute top-[14%] right-[8%] animate-float opacity-90" style={{ ['--r' as any]: '14deg' }}>
+        <Duck size={90} />
+      </div>
+      <div className="absolute bottom-[16%] left-[6%] animate-float opacity-90" style={{ ['--r' as any]: '-10deg', animationDelay: '1.4s' }}>
+        <Duck size={72} />
+      </div>
+      <div className="absolute top-[44%] left-[3%] animate-float blur-[1px] opacity-70" style={{ ['--r' as any]: '18deg', animationDelay: '0.6s' }}>
+        <Duck size={48} />
+      </div>
+
+      {/* content */}
+      <div className={`relative z-10 w-full max-w-5xl mx-auto px-5 md:px-12 py-24 text-center transition-all duration-1000 ${shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+        <div className="inline-flex items-center gap-2 bg-background/15 backdrop-blur-md border border-background/30 px-3 py-1.5 rounded-full text-background/90 text-[10px] uppercase tracking-[0.35em] mb-6">
+          <Sparkle size={10} className="text-accent" /> nature's favorite
+        </div>
+
+        <h2 className="font-display text-background text-[clamp(3rem,11vw,8rem)] leading-[0.85] drop-shadow-2xl">
+          SHE WALKS<br />IN <span className="text-accent">BEAUTY.</span>
+        </h2>
+
+        <p className="mt-6 max-w-xl mx-auto font-script text-2xl md:text-4xl text-background/90 leading-snug">
+          "the grass stood a little taller, the sky leaned in a little closer — just to watch her pass."
+        </p>
+
+        <div className="mt-8 inline-flex items-center gap-3 text-background/80 text-[10px] uppercase tracking-[0.4em]">
+          <span className="h-px w-10 bg-accent" />
+          <span>roopa in bloom</span>
+          <span className="h-px w-10 bg-accent" />
+        </div>
+      </div>
+
+      {/* bottom earth strip with tiny wildflower dots */}
+      <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-foreground/60 to-transparent pointer-events-none" />
+    </section>
+  );
+}
+
 function Footer() {
   return <FooterInner />;
 }
@@ -797,6 +880,7 @@ function Index() {
       <SurpriseSection />
       <PolaroidDiary />
       <PinkMoodSection />
+      <FieldSection />
       <ChildhoodVault />
       <Footer />
     </main>
