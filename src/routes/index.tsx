@@ -544,6 +544,103 @@ function PolaroidDiary() {
   );
 }
 
+function PinkMoodSection() {
+  const { ref, shown } = useReveal();
+  return (
+    <section
+      ref={ref as any}
+      className="relative overflow-hidden py-20 md:py-28 px-5 md:px-6 bg-foreground text-background"
+    >
+      {/* soft warm tint overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.12] pointer-events-none"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 30% 30%, oklch(0.72 0.21 50), transparent 60%), radial-gradient(circle at 70% 70%, oklch(0.93 0.18 95), transparent 55%)",
+        }}
+      />
+      {/* grid overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.06] pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      <Sparkle className="absolute top-10 left-[8%] text-accent animate-twinkle" size={30} />
+      <Sparkle className="absolute top-[18%] right-[10%] text-background animate-twinkle" size={24} />
+      <Sparkle className="absolute bottom-[12%] left-[12%] text-accent animate-twinkle" size={22} />
+      <Sparkle className="absolute bottom-[18%] right-[8%] text-background animate-twinkle" size={28} />
+
+      <div className="max-w-6xl mx-auto">
+        {/* header */}
+        <div className="text-center mb-12 md:mb-16">
+          <div className="font-script text-accent text-2xl md:text-3xl mb-2">a whole mood board</div>
+          <h2 className="font-display text-background text-[clamp(2.4rem,9vw,7rem)] leading-[0.9]">
+            THE PINK <span className="text-accent">ERA</span>.
+          </h2>
+          <p className="mt-4 text-background/70 uppercase tracking-[0.3em] text-xs max-w-md mx-auto">
+            every angle, every smile, every shade of her — one frame, infinite warmth
+          </p>
+        </div>
+
+        {/* collage centerpiece — scrapbook spread feel */}
+        <div
+          className={`relative mx-auto transition-all duration-1000 ${shown ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}
+        >
+          {/* top washi tape */}
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-7 bg-accent/80 rotate-[-2deg] z-20 shadow-md" />
+          {/* side tape */}
+          <div className="absolute top-[30%] -left-3 w-7 h-24 bg-background/40 rotate-[6deg] z-20 shadow-md" />
+          <div className="absolute top-[40%] -right-3 w-7 h-20 bg-accent/60 rotate-[-4deg] z-20 shadow-md" />
+
+          <div className="relative bg-background p-2 md:p-3 rounded-sm shadow-[16px_18px_0_0_rgba(0,0,0,0.9)] border border-background/10 max-w-3xl mx-auto">
+            <img
+              src={roopaPinkCollage.url}
+              alt="Roopa — the pink era collage"
+              loading="lazy"
+              className="w-full h-auto block"
+              style={{ filter: "saturate(1.08) contrast(0.98)" }}
+            />
+          </div>
+
+          {/* sticker badges */}
+          <div className="absolute -top-2 -right-2 md:top-0 md:right-[-1rem] bg-accent text-foreground font-display text-sm px-4 py-2 rounded-full border-2 border-background rotate-[12deg] shadow-[4px_4px_0_0_rgba(0,0,0,1)] z-20">
+            ✦ main character ✦
+          </div>
+          <div className="absolute -bottom-2 -left-2 md:bottom-0 md:left-[-1rem] bg-background text-foreground font-display text-xs px-3 py-1.5 rounded-full border-2 border-accent rotate-[-8deg] shadow-[3px_3px_0_0_rgba(0,0,0,1)] z-20">
+            pink only 🌸
+          </div>
+        </div>
+
+        {/* quote under collage */}
+        <div
+          className={`relative max-w-2xl mx-auto mt-14 md:mt-18 text-center transition-all duration-1000 delay-200 ${shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+        >
+          <p className="font-script text-2xl md:text-4xl text-background/90 leading-snug">
+            "she didn't just wear the color — <span className="text-accent">she became the glow</span> that turned the whole day pink."
+          </p>
+          <div className="mt-6 inline-flex items-center gap-3 text-background/60 text-[10px] uppercase tracking-[0.4em]">
+            <span className="h-px w-10 bg-accent" />
+            <span>roopa in bloom</span>
+            <span className="h-px w-10 bg-accent" />
+          </div>
+        </div>
+      </div>
+
+      {/* floating ducks */}
+      <div className="absolute top-[8%] right-[5%] animate-float opacity-90" style={{ ['--r' as any]: '10deg' }}>
+        <Duck size={64} />
+      </div>
+      <div className="absolute bottom-[10%] left-[4%] animate-float opacity-90" style={{ ['--r' as any]: '-14deg', animationDelay: '1.2s' }}>
+        <Duck size={52} />
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   return <FooterInner />;
 }
