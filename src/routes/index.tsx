@@ -703,7 +703,7 @@ function FieldSection() {
           <Sparkle size={10} className="text-accent" /> nature's favorite
         </div>
 
-        <h2 className="font-display text-background text-[clamp(3rem,11 text-5xl)] leading-[0.85] drop-shadow-2xl">
+        <h2 className="font-display text-background text-[clamp(3rem,11vw,8rem)] leading-[0.85] drop-shadow-2xl">
           SHE WALKS<br />IN <span className="text-accent">BEAUTY.</span>
         </h2>
 
