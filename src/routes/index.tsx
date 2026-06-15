@@ -553,9 +553,9 @@ function PinkMoodSection() {
       ref={ref as any}
       className="relative overflow-hidden py-20 md:py-28 px-5 md:px-6 bg-foreground text-background"
     >
-      {/* soft warm tint overlay */}
+      {/* soft warm tint overlay — very light so image pops */}
       <div
-        className="absolute inset-0 opacity-[0.12] pointer-events-none"
+        className="absolute inset-0 opacity-[0.06] pointer-events-none"
         style={{
           backgroundImage:
             "radial-gradient(circle at 30% 30%, oklch(0.72 0.21 50), transparent 60%), radial-gradient(circle at 70% 70%, oklch(0.93 0.18 95), transparent 55%)",
