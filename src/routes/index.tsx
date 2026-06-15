@@ -659,9 +659,9 @@ function FieldSection() {
         style={{ objectPosition: 'center 25%' }}
       />
 
-      {/* earthy veils — warm & soft */}
-      <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/10 to-foreground/35" />
-      <div className="absolute inset-0 bg-gradient-to-r from-foreground/45 via-transparent to-foreground/45" />
+      {/* earthy veils — lighter so the image stays visible */}
+      <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 via-transparent to-foreground/20" />
+      <div className="absolute inset-0 bg-gradient-to-r from-foreground/20 via-transparent to-foreground/20" />
 
       {/* subtle green tint overlay to match the field */}
       <div
