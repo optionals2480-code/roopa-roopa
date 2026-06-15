@@ -648,32 +648,32 @@ function FieldSection() {
   return (
     <section
       ref={ref as any}
-      className="relative overflow-hidden min-h-[100svh] flex items-center"
+      className="relative overflow-hidden min-h-[100svh] flex items-end"
     >
-      {/* bg — full natural portrait */}
+      {/* bg — full natural portrait, whole image visible like footer black saree */}
       <img
         src={roopaField.url}
         alt="Roopa — bloom in the wild"
         loading="lazy"
-        className={`absolute inset-0 w-full h-full object-cover object-center transition-transform duration-[1600ms] ${shown ? 'scale-100' : 'scale-110'}`}
-        style={{ objectPosition: 'center 25%' }}
+        className={`absolute inset-0 w-full h-full object-cover object-top transition-transform duration-[1600ms] ${shown ? 'scale-100' : 'scale-110'}`}
+        style={{ objectPosition: 'center top' }}
       />
 
-      {/* earthy veils — lighter so the image stays visible */}
-      <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 via-transparent to-foreground/20" />
-      <div className="absolute inset-0 bg-gradient-to-r from-foreground/20 via-transparent to-foreground/20" />
+      {/* very light veils — image must stay crystal clear */}
+      <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-foreground/10 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-foreground/15 via-transparent to-foreground/15" />
 
       {/* subtle green tint overlay to match the field */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle at 50% 70%, color-mix(in oklab, oklch(0.55 0.15 140) 25%, transparent), transparent 65%)',
+          background: 'radial-gradient(circle at 50% 30%, color-mix(in oklab, oklch(0.55 0.15 140) 15%, transparent), transparent 55%)',
         }}
       />
 
       {/* organic grain dots */}
       <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
           backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)',
           backgroundSize: '24px 24px',
@@ -683,44 +683,38 @@ function FieldSection() {
       {/* sparkles — scattered like fireflies */}
       <Sparkle className="absolute top-[12%] left-[10%] text-accent animate-twinkle" size={28} />
       <Sparkle className="absolute top-[22%] right-[14%] text-background animate-twinkle" size={22} />
-      <Sparkle className="absolute bottom-[20%] left-[8%] text-accent animate-twinkle" size={34} />
-      <Sparkle className="absolute bottom-[14%] right-[10%] text-background animate-twinkle" size={26} />
       <Sparkle className="absolute top-[55%] left-[45%] text-accent/70 animate-twinkle" size={18} />
+      <Sparkle className="absolute bottom-[24%] left-[8%] text-accent animate-twinkle" size={34} />
+      <Sparkle className="absolute bottom-[18%] right-[10%] text-background animate-twinkle" size={26} />
 
       {/* floating ducks — like they wandered into the meadow */}
       <div className="absolute top-[14%] right-[8%] animate-float opacity-90" style={{ ['--r' as any]: '14deg' }}>
         <Duck size={90} />
       </div>
-      <div className="absolute bottom-[16%] left-[6%] animate-float opacity-90" style={{ ['--r' as any]: '-10deg', animationDelay: '1.4s' }}>
-        <Duck size={72} />
-      </div>
-      <div className="absolute top-[44%] left-[3%] animate-float blur-[1px] opacity-70" style={{ ['--r' as any]: '18deg', animationDelay: '0.6s' }}>
+      <div className="absolute top-[40%] left-[3%] animate-float blur-[1px] opacity-70" style={{ ['--r' as any]: '18deg', animationDelay: '0.6s' }}>
         <Duck size={48} />
       </div>
 
-      {/* content */}
-      <div className={`relative z-10 w-full max-w-5xl mx-auto px-5 md:px-12 py-24 text-center transition-all duration-1000 ${shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-        <div className="inline-flex items-center gap-2 bg-background/15 backdrop-blur-md border border-background/30 px-3 py-1.5 rounded-full text-background/90 text-[10px] uppercase tracking-[0.35em] mb-6">
+      {/* content — pinned to bottom so it never covers the face */}
+      <div className={`relative z-10 w-full max-w-5xl mx-auto px-5 md:px-12 pb-12 md:pb-16 pt-32 text-left transition-all duration-1000 ${shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+        <div className="inline-flex items-center gap-2 bg-background/15 backdrop-blur-md border border-background/30 px-3 py-1.5 rounded-full text-background/90 text-[10px] uppercase tracking-[0.35em] mb-4">
           <Sparkle size={10} className="text-accent" /> nature's favorite
         </div>
 
-        <h2 className="font-display text-background text-[clamp(3rem,11vw,8rem)] leading-[0.85] drop-shadow-2xl">
-          SHE WALKS<br />IN <span className="text-accent">BEAUTY.</span>
+        <h2 className="font-display text-background text-[clamp(2.4rem,8vw,6rem)] leading-[0.9] drop-shadow-2xl">
+          SHE WALKS IN <span className="text-accent">BEAUTY.</span>
         </h2>
 
-        <p className="mt-6 max-w-xl mx-auto font-script text-2xl md:text-4xl text-background/90 leading-snug">
+        <p className="mt-4 max-w-xl font-script text-xl md:text-3xl text-background/90 leading-snug drop-shadow-lg">
           "the grass stood a little taller, the sky leaned in a little closer — just to watch her pass."
         </p>
 
-        <div className="mt-8 inline-flex items-center gap-3 text-background/80 text-[10px] uppercase tracking-[0.4em]">
+        <div className="mt-6 inline-flex items-center gap-3 text-background/80 text-[10px] uppercase tracking-[0.4em]">
           <span className="h-px w-10 bg-accent" />
           <span>roopa in bloom</span>
           <span className="h-px w-10 bg-accent" />
         </div>
       </div>
-
-      {/* bottom earth strip with tiny wildflower dots */}
-      <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-foreground/60 to-transparent pointer-events-none" />
     </section>
   );
 }
