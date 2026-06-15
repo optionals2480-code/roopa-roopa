@@ -871,6 +871,93 @@ function FooterInner() {
   );
 }
 
+function DoorwaySection() {
+  const { ref, shown } = useReveal();
+  return (
+    <section
+      ref={ref as any}
+      className="relative overflow-hidden min-h-[100svh] flex items-center"
+    >
+      {/* bg — warm cream with subtle pink glow */}
+      <div className="absolute inset-0 bg-background" />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle at 70% 40%, color-mix(in oklab, oklch(0.72 0.21 50) 20%, transparent), transparent 60%)",
+        }}
+      />
+
+      {/* grid */}
+      <div
+        className="absolute inset-0 opacity-[0.05] pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      <Sparkle className="absolute top-[10%] left-[8%] text-accent animate-twinkle" size={30} />
+      <Sparkle className="absolute top-[15%] right-[12%] text-foreground animate-twinkle" size={22} />
+      <Sparkle className="absolute bottom-[18%] left-[10%] text-accent animate-twinkle" size={26} />
+      <Sparkle className="absolute bottom-[12%] right-[8%] text-foreground animate-twinkle" size={34} />
+
+      {/* floating ducks */}
+      <div className="absolute top-[12%] right-[6%] animate-float opacity-90" style={{ ["--r" as any]: "12deg" }}>
+        <Duck size={80} />
+      </div>
+      <div className="absolute bottom-[14%] left-[4%] animate-float opacity-90" style={{ ["--r" as any]: "-10deg", animationDelay: "1s" }}>
+        <Duck size={64} />
+      </div>
+
+      <div className={`relative z-10 w-full max-w-7xl mx-auto px-5 md:px-12 py-24 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center transition-all duration-1000 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+        {/* text side */}
+        <div className="order-2 md:order-1 text-center md:text-left">
+          <div className="inline-flex items-center gap-2 bg-foreground/10 backdrop-blur-md border border-foreground/20 px-3 py-1.5 rounded-full text-foreground/90 text-[10px] uppercase tracking-[0.35em] mb-6">
+            <Sparkle size={10} className="text-accent" /> peek-a-boo
+          </div>
+          <h2 className="font-display text-foreground text-[clamp(2.8rem,10vw,6.5rem)] leading-[0.88]">
+            SHE PEEKED<br />IN AND THE<br /><span className="text-accent">WHOLE DAY</span><br />GOT BRIGHTER.
+          </h2>
+          <p className="mt-6 max-w-md mx-auto md:mx-0 font-script text-2xl md:text-3xl text-foreground/80 leading-snug">
+            "some smiles don't just enter a room — they sneak through the doorframe and steal the whole scene."
+          </p>
+          <div className="mt-8 inline-flex items-center gap-3 text-foreground/60 text-[10px] uppercase tracking-[0.4em]">
+            <span className="h-px w-10 bg-accent" />
+            <span>roopa in pink</span>
+            <span className="h-px w-10 bg-accent" />
+          </div>
+        </div>
+
+        {/* image side — big & framed like a doorway */}
+        <div className="order-1 md:order-2 flex justify-center">
+          <div className="relative group">
+            {/* doorway frame effect */}
+            <div className="absolute -inset-2 md:-inset-4 border-[6px] md:border-[10px] border-foreground/90 rounded-sm bg-foreground/5" />
+            <div className="absolute -inset-1 md:-inset-2 border-[3px] md:border-[4px] border-accent/60 rounded-sm" />
+            {/* corner accent blocks like door hinges */}
+            <div className="absolute -top-3 left-4 w-6 h-3 bg-accent z-20" />
+            <div className="absolute -top-3 right-4 w-6 h-3 bg-accent z-20" />
+
+            <img
+              src={roopaPinkDoorway.url}
+              alt="Roopa — peeking in pink"
+              loading="lazy"
+              className={`relative z-10 w-[280px] md:w-[380px] lg:w-[440px] h-[380px] md:h-[520px] lg:h-[580px] object-cover object-top rounded-sm transition-transform duration-1000 ${shown ? "scale-100" : "scale-95"}`}
+            />
+
+            {/* sticker badge */}
+            <div className="absolute -bottom-4 -right-4 md:-bottom-5 md:-right-6 bg-accent text-foreground font-display text-sm md:text-base px-4 py-2 rounded-full border-2 border-foreground rotate-[8deg] shadow-[4px_4px_0_0_rgba(0,0,0,1)] z-20">
+              hello world 🌸
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Index() {
   return (
     <main className="grain">
@@ -881,6 +968,7 @@ function Index() {
       <SurpriseSection />
       <PolaroidDiary />
       <PinkMoodSection />
+      <DoorwaySection />
       <FieldSection />
       <ChildhoodVault />
       <Footer />
