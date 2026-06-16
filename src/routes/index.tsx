@@ -648,56 +648,53 @@ function FieldSection() {
   return (
     <section
       ref={ref as any}
-      className="relative overflow-hidden min-h-[100svh] flex items-end"
+      className="relative overflow-hidden bg-foreground text-background"
     >
-      {/* bg — full natural portrait, whole image visible like footer black saree */}
-      <img
-        src={roopaField.url}
-        alt="Roopa — bloom in the wild"
-        loading="lazy"
-        className={`absolute inset-0 w-full h-full object-cover object-top transition-transform duration-[1600ms] ${shown ? 'scale-100' : 'scale-110'}`}
-        style={{ objectPosition: 'center top' }}
-      />
+      <div className="relative min-h-[88svh] md:min-h-[100svh] flex items-center justify-center px-3 py-8 md:px-10 md:py-10">
+        {/* blurred cover fills the screen, clear portrait stays fully visible */}
+        <img
+          src={roopaField.url}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="absolute inset-0 h-full w-full scale-110 object-cover object-top blur-xl opacity-70"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/15 via-transparent to-foreground/35" />
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/35 via-transparent to-foreground/35" />
 
-      {/* very light veils — image must stay crystal clear */}
-      <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-foreground/10 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-r from-foreground/15 via-transparent to-foreground/15" />
+        {/* organic grain dots */}
+        <div
+          className="absolute inset-0 opacity-[0.035] pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
+            backgroundSize: '24px 24px',
+          }}
+        />
 
-      {/* subtle green tint overlay to match the field */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle at 50% 30%, color-mix(in oklab, oklch(0.55 0.15 140) 15%, transparent), transparent 55%)',
-        }}
-      />
+        <img
+          src={roopaField.url}
+          alt="Roopa — bloom in the wild"
+          loading="lazy"
+          className={`relative z-10 h-[82svh] max-h-[920px] w-full object-contain object-top drop-shadow-2xl transition-all duration-[1600ms] md:h-[94svh] ${shown ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
+        />
 
-      {/* organic grain dots */}
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-        }}
-      />
+        {/* sparkles — kept around edges, not on face */}
+        <Sparkle className="absolute top-[10%] left-[8%] text-accent animate-twinkle" size={28} />
+        <Sparkle className="absolute top-[18%] right-[10%] text-background animate-twinkle" size={22} />
+        <Sparkle className="absolute bottom-[18%] left-[7%] text-accent animate-twinkle" size={30} />
+        <Sparkle className="absolute bottom-[16%] right-[8%] text-background animate-twinkle" size={24} />
 
-      {/* sparkles — scattered like fireflies */}
-      <Sparkle className="absolute top-[12%] left-[10%] text-accent animate-twinkle" size={28} />
-      <Sparkle className="absolute top-[22%] right-[14%] text-background animate-twinkle" size={22} />
-      <Sparkle className="absolute top-[55%] left-[45%] text-accent/70 animate-twinkle" size={18} />
-      <Sparkle className="absolute bottom-[24%] left-[8%] text-accent animate-twinkle" size={34} />
-      <Sparkle className="absolute bottom-[18%] right-[10%] text-background animate-twinkle" size={26} />
-
-      {/* floating ducks — like they wandered into the meadow */}
-      <div className="absolute top-[14%] right-[8%] animate-float opacity-90" style={{ ['--r' as any]: '14deg' }}>
-        <Duck size={90} />
-      </div>
-      <div className="absolute top-[40%] left-[3%] animate-float blur-[1px] opacity-70" style={{ ['--r' as any]: '18deg', animationDelay: '0.6s' }}>
-        <Duck size={48} />
+        <div className="absolute top-[12%] right-[5%] animate-float opacity-85" style={{ ['--r' as any]: '14deg' }}>
+          <Duck size={80} />
+        </div>
+        <div className="absolute bottom-[18%] left-[3%] animate-float blur-[1px] opacity-65" style={{ ['--r' as any]: '18deg', animationDelay: '0.6s' }}>
+          <Duck size={46} />
+        </div>
       </div>
 
-      {/* content — pinned to bottom so it never covers the face */}
-      <div className={`relative z-10 w-full max-w-5xl mx-auto px-5 md:px-12 pb-12 md:pb-16 pt-32 text-left transition-all duration-1000 ${shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-        <div className="inline-flex items-center gap-2 bg-background/15 backdrop-blur-md border border-background/30 px-3 py-1.5 rounded-full text-background/90 text-[10px] uppercase tracking-[0.35em] mb-4">
+      {/* content below the photo so it never hides the face on any screen */}
+      <div className={`relative z-10 mx-auto w-full max-w-5xl px-5 pb-16 pt-8 text-left transition-all duration-1000 md:px-12 md:pb-20 ${shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+        <div className="inline-flex items-center gap-2 bg-background/10 backdrop-blur-md border border-background/25 px-3 py-1.5 rounded-full text-background/90 text-[10px] uppercase tracking-[0.35em] mb-4">
           <Sparkle size={10} className="text-accent" /> nature's favorite
         </div>
 
@@ -870,56 +867,52 @@ function DoorwaySection() {
   return (
     <section
       ref={ref as any}
-      className="relative overflow-hidden min-h-[100svh] flex items-end"
+      className="relative overflow-hidden bg-foreground text-background"
     >
-      {/* bg — full-bleed pink dress portrait like chapter bg cover */}
-      <img
-        src={roopaPinkDoorway.url}
-        alt="Roopa — peeking in pink"
-        loading="lazy"
-        className={`absolute inset-0 w-full h-full object-cover object-top transition-transform duration-[1600ms] ${shown ? 'scale-100' : 'scale-110'}`}
-        style={{ objectPosition: 'center top' }}
-      />
+      <div className="relative min-h-[88svh] md:min-h-[100svh] flex items-center justify-center px-3 py-8 md:px-10 md:py-10">
+        {/* blurred full-cover layer keeps bg style, clear portrait stays uncropped */}
+        <img
+          src={roopaPinkDoorway.url}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="absolute inset-0 h-full w-full scale-110 object-cover object-top blur-xl opacity-75"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/10 via-transparent to-foreground/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/30 via-transparent to-foreground/30" />
 
-      {/* light veils so image stays super visible */}
-      <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-foreground/10 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-r from-foreground/15 via-transparent to-foreground/15" />
+        <div
+          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
+          }}
+        />
 
-      {/* soft pink glow matching the dress */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle at 50% 30%, color-mix(in oklab, oklch(0.72 0.21 50) 15%, transparent), transparent 55%)',
-        }}
-      />
+        <img
+          src={roopaPinkDoorway.url}
+          alt="Roopa — peeking in pink"
+          loading="lazy"
+          className={`relative z-10 h-[82svh] max-h-[920px] w-full object-contain object-top drop-shadow-2xl transition-all duration-[1600ms] md:h-[94svh] ${shown ? "scale-100 opacity-100" : "scale-95 opacity-0"}`}
+        />
 
-      {/* grid */}
-      <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
+        <Sparkle className="absolute top-[9%] left-[8%] text-accent animate-twinkle" size={30} />
+        <Sparkle className="absolute top-[14%] right-[10%] text-background animate-twinkle" size={22} />
+        <Sparkle className="absolute bottom-[18%] left-[8%] text-accent animate-twinkle" size={26} />
+        <Sparkle className="absolute bottom-[14%] right-[8%] text-background animate-twinkle" size={32} />
 
-      <Sparkle className="absolute top-[10%] left-[8%] text-accent animate-twinkle" size={30} />
-      <Sparkle className="absolute top-[15%] right-[12%] text-background animate-twinkle" size={22} />
-      <Sparkle className="absolute top-[50%] left-[45%] text-accent/70 animate-twinkle" size={18} />
-      <Sparkle className="absolute bottom-[22%] left-[10%] text-accent animate-twinkle" size={26} />
-      <Sparkle className="absolute bottom-[16%] right-[8%] text-background animate-twinkle" size={34} />
-
-      {/* floating ducks */}
-      <div className="absolute top-[12%] right-[6%] animate-float opacity-90" style={{ ["--r" as any]: "12deg" }}>
-        <Duck size={80} />
-      </div>
-      <div className="absolute top-[38%] left-[4%] animate-float blur-[1px] opacity-70" style={{ ["--r" as any]: "-16deg", animationDelay: "0.8s" }}>
-        <Duck size={52} />
+        <div className="absolute top-[11%] right-[5%] animate-float opacity-85" style={{ ["--r" as any]: "12deg" }}>
+          <Duck size={76} />
+        </div>
+        <div className="absolute bottom-[18%] left-[4%] animate-float blur-[1px] opacity-65" style={{ ["--r" as any]: "-16deg", animationDelay: "0.8s" }}>
+          <Duck size={48} />
+        </div>
       </div>
 
-      {/* content — pinned to bottom so it never covers the face */}
-      <div className={`relative z-10 w-full max-w-5xl mx-auto px-5 md:px-12 pb-12 md:pb-16 pt-32 text-left transition-all duration-1000 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
-        <div className="inline-flex items-center gap-2 bg-background/15 backdrop-blur-md border border-background/30 px-3 py-1.5 rounded-full text-background/90 text-[10px] uppercase tracking-[0.35em] mb-4">
+      {/* content below the photo so it never covers the face on any screen */}
+      <div className={`relative z-10 mx-auto w-full max-w-5xl px-5 pb-16 pt-8 text-left transition-all duration-1000 md:px-12 md:pb-20 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+        <div className="inline-flex items-center gap-2 bg-background/10 backdrop-blur-md border border-background/25 px-3 py-1.5 rounded-full text-background/90 text-[10px] uppercase tracking-[0.35em] mb-4">
           <Sparkle size={10} className="text-accent" /> peek-a-boo
         </div>
         <h2 className="font-display text-background text-[clamp(2.4rem,8vw,6rem)] leading-[0.9] drop-shadow-2xl">
