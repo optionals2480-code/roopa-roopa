@@ -23,6 +23,10 @@ const QUOTES = [
   { text: "You're the kind of friend the universe shows off about.", by: "— and we agree" },
   { text: "Stay golden, stay glowing, stay outrageously you.", by: "— forever rule" },
   { text: "Cheers to the chaos, the laughter, and another year of you.", by: "— with all the love" },
+  { text: "She's more beautiful than the sunset knows how to be.", by: "— and the sky agrees" },
+  { text: "No one does it better. No one ever will. It's just a roopa thing.", by: "— scientifically proven" },
+  { text: "Prettier than every poem ever written, softer than every song.", by: "— facts only" },
+  { text: "The world tried to make a better version of you. It failed. Loudly.", by: "— case closed" },
 ];
 
 function useReveal() {
