@@ -652,65 +652,51 @@ function FieldSection() {
   return (
     <section
       ref={ref as any}
-      className="relative overflow-hidden bg-foreground text-background"
+      className="relative flex flex-col overflow-hidden bg-foreground text-background"
     >
-      <div className="relative min-h-[88svh] md:min-h-[100svh] flex items-center justify-center px-3 py-8 md:px-10 md:py-10">
-        {/* blurred cover fills the screen, clear portrait stays fully visible */}
-        <img
-          src={roopaField.url}
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          className="absolute inset-0 h-full w-full scale-110 object-cover object-top blur-xl opacity-70"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/15 via-transparent to-foreground/35" />
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/35 via-transparent to-foreground/35" />
-
-        {/* organic grain dots */}
-        <div
-          className="absolute inset-0 opacity-[0.035] pointer-events-none"
-          style={{
-            backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
-            backgroundSize: '24px 24px',
-          }}
-        />
-
+      {/* full portrait, uncropped — matches the black saree footer treatment */}
+      <div className="relative w-full bg-foreground">
         <img
           src={roopaField.url}
           alt="Roopa — bloom in the wild"
           loading="lazy"
-          className={`relative z-10 h-[82svh] max-h-[920px] w-full object-contain object-top drop-shadow-2xl transition-all duration-[1600ms] md:h-[94svh] ${shown ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
+          className={`block w-full h-auto max-h-none object-contain mx-auto transition-all duration-[1400ms] ${shown ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.98]'}`}
         />
+        {/* edge-only vignette; never covers face */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-foreground to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-foreground via-foreground/70 to-transparent" />
 
-        {/* sparkles — kept around edges, not on face */}
-        <Sparkle className="absolute top-[10%] left-[8%] text-accent animate-twinkle" size={28} />
-        <Sparkle className="absolute top-[18%] right-[10%] text-background animate-twinkle" size={22} />
-        <Sparkle className="absolute bottom-[18%] left-[7%] text-accent animate-twinkle" size={30} />
-        <Sparkle className="absolute bottom-[16%] right-[8%] text-background animate-twinkle" size={24} />
-
-        <div className="absolute top-[12%] right-[5%] animate-float opacity-85" style={{ ['--r' as any]: '14deg' }}>
-          <Duck size={80} />
+        <Sparkle className="absolute top-[5%] left-[5%] text-accent animate-twinkle" size={30} />
+        <Sparkle className="absolute top-[9%] right-[6%] text-background animate-twinkle" size={22} />
+        <Sparkle className="absolute bottom-[16%] right-[8%] text-accent animate-twinkle" size={26} />
+        <div className="absolute top-[6%] right-[3%] animate-float opacity-90" style={{ ['--r' as any]: '14deg' }}>
+          <Duck size={64} />
         </div>
-        <div className="absolute bottom-[18%] left-[3%] animate-float blur-[1px] opacity-65" style={{ ['--r' as any]: '18deg', animationDelay: '0.6s' }}>
-          <Duck size={46} />
+        <div className="absolute bottom-[14%] left-[3%] animate-float opacity-85" style={{ ['--r' as any]: '-14deg', animationDelay: '1s' }}>
+          <Duck size={54} />
+        </div>
+
+        {/* floating sticker badge on the image edge */}
+        <div className="absolute top-6 left-6 md:top-10 md:left-10 bg-accent text-foreground font-display text-sm md:text-base px-4 py-2 rounded-full border-2 border-background rotate-[-6deg] shadow-[4px_4px_0_0_rgba(0,0,0,1)] z-20">
+          ✦ nature's favorite ✦
         </div>
       </div>
 
-      {/* content below the photo so it never hides the face on any screen */}
-      <div className={`relative z-10 mx-auto w-full max-w-5xl px-5 pb-16 pt-8 text-left transition-all duration-1000 md:px-12 md:pb-20 ${shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-        <div className="inline-flex items-center gap-2 bg-background/10 backdrop-blur-md border border-background/25 px-3 py-1.5 rounded-full text-background/90 text-[10px] uppercase tracking-[0.35em] mb-4">
-          <Sparkle size={10} className="text-accent" /> nature's favorite
+      {/* hero quote under portrait — footer-style */}
+      <div className={`relative z-10 px-5 md:px-6 pt-14 md:pt-20 pb-14 text-center bg-foreground transition-all duration-1000 ${shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <div className="font-script text-accent text-2xl md:text-4xl mb-3 drop-shadow">
+          to the girl in the green field —
         </div>
-
-        <h2 className="font-display text-background text-[clamp(2.4rem,8vw,6rem)] leading-[0.9] drop-shadow-2xl">
-          SHE WALKS IN <span className="text-accent">BEAUTY.</span>
+        <h2 className="font-display text-background text-[clamp(2.2rem,9vw,7.5rem)] leading-[0.85] tracking-tight drop-shadow-lg">
+          SHE WALKS IN <br /><span className="text-accent">BEAUTY.</span>
         </h2>
-
-        <p className="mt-4 max-w-xl font-script text-xl md:text-3xl text-background/90 leading-snug drop-shadow-lg">
+        <p className="mt-6 max-w-2xl mx-auto font-script text-xl md:text-3xl text-background/90 px-2 leading-snug">
           "the grass stood a little taller, the sky leaned in a little closer — just to watch her pass."
         </p>
-
-        <div className="mt-6 inline-flex items-center gap-3 text-background/80 text-[10px] uppercase tracking-[0.4em]">
+        <p className="mt-4 max-w-xl mx-auto text-background/80 text-sm md:text-base italic">
+          she's more beautiful than the season, softer than the wind — no one, anywhere, does it better.
+        </p>
+        <div className="mt-8 inline-flex items-center gap-3 text-background/70 text-[10px] uppercase tracking-[0.4em]">
           <span className="h-px w-10 bg-accent" />
           <span>roopa in bloom</span>
           <span className="h-px w-10 bg-accent" />
