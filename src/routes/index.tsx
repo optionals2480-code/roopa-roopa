@@ -912,6 +912,7 @@ function DoorwaySection() {
 function Index() {
   return (
     <main className="grain">
+      <SparkleCursor />
       <Hero />
       <QuotesSection />
       <DuoSection />
@@ -921,8 +922,121 @@ function Index() {
       <PinkMoodSection />
       <DoorwaySection />
       <FieldSection />
+      <WishesWall />
       <ChildhoodVault />
       <Footer />
     </main>
+  );
+}
+
+function SparkleCursor() {
+  useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+    let last = 0;
+    const colors = ["#FFE94A", "#FF8C00", "#ffffff"];
+    const handler = (e: MouseEvent) => {
+      const now = performance.now();
+      if (now - last < 40) return;
+      last = now;
+      const s = document.createElement("span");
+      const size = 6 + Math.random() * 8;
+      s.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:${size}px;height:${size}px;background:${colors[(Math.random() * 3) | 0]};border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 700ms ease-out,opacity 700ms ease-out;box-shadow:0 0 8px currentColor;`;
+      document.body.appendChild(s);
+      requestAnimationFrame(() => {
+        s.style.transform = `translate(-50%,-50%) translate(${(Math.random() - 0.5) * 40}px, ${20 + Math.random() * 30}px) scale(0)`;
+        s.style.opacity = "0";
+      });
+      setTimeout(() => s.remove(), 750);
+    };
+    window.addEventListener("mousemove", handler);
+    return () => window.removeEventListener("mousemove", handler);
+  }, []);
+  return null;
+}
+
+function WishesWall() {
+  const [wishes, setWishes] = useState<{ id: number; text: string; from: string }[]>([]);
+  const [text, setText] = useState("");
+  const [from, setFrom] = useState("");
+  const { ref, shown } = useReveal();
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("roopa-wishes");
+      if (raw) setWishes(JSON.parse(raw));
+    } catch {}
+  }, []);
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!text.trim()) return;
+    const next = [{ id: Date.now(), text: text.trim().slice(0, 140), from: (from.trim() || "anonymous").slice(0, 30) }, ...wishes].slice(0, 40);
+    setWishes(next);
+    try { localStorage.setItem("roopa-wishes", JSON.stringify(next)); } catch {}
+    setText("");
+    setFrom("");
+    confetti({ particleCount: 60, spread: 70, origin: { y: 0.7 }, colors: ["#FFE94A", "#FF8C00", "#ffffff"] });
+  };
+
+  const tapes = ["-2deg", "1.5deg", "-1deg", "2.5deg", "-2.5deg", "1deg"];
+
+  return (
+    <section ref={ref as any} className="relative bg-background py-20 md:py-32 px-5 md:px-8 overflow-hidden">
+      <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, var(--foreground) 1px, transparent 1px)", backgroundSize: "22px 22px" }} />
+      <Sparkle className="absolute top-10 left-8 text-accent animate-twinkle" size={26} />
+      <Sparkle className="absolute bottom-16 right-10 text-foreground animate-twinkle" size={22} />
+      <div className="absolute top-8 right-6 animate-float" style={{ ["--r" as any]: "-8deg" }}>
+        <Duck size={54} />
+      </div>
+
+      <div className={`max-w-5xl mx-auto text-center transition-all duration-1000 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div className="font-script text-accent text-2xl md:text-4xl">leave her a note —</div>
+        <h2 className="font-display text-[clamp(2.5rem,9vw,7rem)] leading-[0.9] mt-2">
+          THE <span className="text-accent">WISHES</span> WALL
+        </h2>
+        <p className="mt-4 max-w-xl mx-auto text-foreground/70 text-sm md:text-base">
+          drop a wish, a memory, a compliment — it sticks to the wall forever (well, on your device 😉).
+        </p>
+
+        <form onSubmit={submit} className="mt-10 max-w-2xl mx-auto bg-card border-2 border-foreground rounded-2xl p-5 md:p-6 shadow-[6px_6px_0_0_rgba(0,0,0,1)] text-left">
+          <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="write something ridiculously kind..."
+            maxLength={140}
+            rows={3}
+            className="w-full bg-transparent outline-none font-script text-xl md:text-2xl resize-none placeholder:text-foreground/40"
+          />
+          <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center mt-3 pt-3 border-t border-foreground/20">
+            <input
+              value={from}
+              onChange={(e) => setFrom(e.target.value)}
+              placeholder="— your name"
+              maxLength={30}
+              className="flex-1 bg-transparent outline-none text-sm md:text-base placeholder:text-foreground/40"
+            />
+            <button type="submit" className="bg-foreground text-background font-display tracking-wider px-6 py-3 rounded-full hover:bg-accent hover:text-foreground transition-colors">
+              PIN IT ✦
+            </button>
+          </div>
+        </form>
+
+        {wishes.length > 0 && (
+          <div className="mt-14 grid gap-5 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {wishes.map((w, i) => (
+              <div
+                key={w.id}
+                className="relative bg-card border-2 border-foreground rounded-xl p-5 shadow-[4px_4px_0_0_rgba(0,0,0,1)] text-left animate-pop"
+                style={{ transform: `rotate(${tapes[i % tapes.length]})` }}
+              >
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-5 bg-accent/70 border border-foreground/30" />
+                <p className="font-script text-xl leading-snug">"{w.text}"</p>
+                <p className="mt-3 text-xs uppercase tracking-widest text-foreground/60">— {w.from}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
