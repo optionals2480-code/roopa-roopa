@@ -75,11 +75,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Happy Roopa Day — A Birthday Celebration" },
       { name: "description", content: "A wildly cheerful birthday tribute for Roopa — quotes, photos, ducks, sparkles, and a surprise inside." },
       { name: "author", content: "Made with love" },
-      { property: "og:title", content: "Happy Roopa Day" },
-      { property: "og:description", content: "A birthday celebration page for Roopa." },
+      { property: "og:title", content: "Happy Roopa Day — A Birthday Celebration" },
+      { property: "og:description", content: "A wildly cheerful birthday tribute for Roopa — quotes, photos, ducks, sparkles, and a surprise inside." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Happy Roopa Day — A Birthday Celebration" },
+      { name: "twitter:description", content: "A wildly cheerful birthday tribute for Roopa — quotes, photos, ducks, sparkles, and a surprise inside." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d2bb5e00-9e0c-4edc-a484-058cfe740f92/id-preview-a9535548--26a588e9-26d4-48a9-93b3-e5710054f56f.lovable.app-1783677624624.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d2bb5e00-9e0c-4edc-a484-058cfe740f92/id-preview-a9535548--26a588e9-26d4-48a9-93b3-e5710054f56f.lovable.app-1783677624624.png" },
     ],
     links: [
       {
