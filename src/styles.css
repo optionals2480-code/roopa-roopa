@@ -218,6 +218,21 @@
 }
 .animate-pop { animation: pop-in 0.8s cubic-bezier(.2,.9,.2,1) both; }
 
+@keyframes slam-in {
+  0% { transform: translateY(-120px) rotate(-20deg) scale(1.4); opacity: 0; }
+  50% { transform: translateY(10px) rotate(4deg) scale(1.05); opacity: 1; }
+  70% { transform: translateY(-4px) rotate(-2deg) scale(0.98); }
+  100% { transform: rotate(0deg) scale(1); opacity: 1; }
+}
+.animate-slam { animation: slam-in 0.9s cubic-bezier(.3,1.4,.4,1) both; }
+
+@keyframes tape-stick {
+  0% { transform: translateX(-50%) scaleX(0); }
+  60% { transform: translateX(-50%) scaleX(1.15); }
+  100% { transform: translateX(-50%) scaleX(1); }
+}
+.animate-tape { animation: tape-stick 0.5s ease-out 0.3s both; transform-origin: center; }
+
 /* Mobile: disable fixed bg (broken on iOS) */
 @media (max-width: 768px) {
   .bg-fixed-safe { background-attachment: scroll !important; }
