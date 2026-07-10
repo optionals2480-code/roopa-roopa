@@ -958,6 +958,7 @@ function WishesWall() {
   const [wishes, setWishes] = useState<{ id: number; text: string; from: string }[]>([]);
   const [text, setText] = useState("");
   const [from, setFrom] = useState("");
+  const [justPinned, setJustPinned] = useState<number | null>(null);
   const { ref, shown } = useReveal();
 
   useEffect(() => {
@@ -970,12 +971,40 @@ function WishesWall() {
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!text.trim()) return;
-    const next = [{ id: Date.now(), text: text.trim().slice(0, 140), from: (from.trim() || "anonymous").slice(0, 30) }, ...wishes].slice(0, 40);
+    const id = Date.now();
+    const next = [{ id, text: text.trim().slice(0, 140), from: (from.trim() || "anonymous").slice(0, 30) }, ...wishes].slice(0, 40);
     setWishes(next);
     try { localStorage.setItem("roopa-wishes", JSON.stringify(next)); } catch {}
     setText("");
     setFrom("");
-    confetti({ particleCount: 60, spread: 70, origin: { y: 0.7 }, colors: ["#FFE94A", "#FF8C00", "#ffffff"] });
+    setJustPinned(id);
+    setTimeout(() => setJustPinned(null), 1400);
+
+    // multi-burst confetti
+    const palette = ["#FFE94A", "#FF8C00", "#ffffff", "#FFD700", "#FF69B4"];
+    confetti({ particleCount: 120, spread: 90, startVelocity: 55, origin: { y: 0.7 }, colors: palette });
+    setTimeout(() => confetti({ particleCount: 80, angle: 60, spread: 70, origin: { x: 0, y: 0.8 }, colors: palette }), 150);
+    setTimeout(() => confetti({ particleCount: 80, angle: 120, spread: 70, origin: { x: 1, y: 0.8 }, colors: palette }), 300);
+    setTimeout(() => confetti({ particleCount: 60, spread: 120, scalar: 1.4, shapes: ["star"], origin: { y: 0.6 }, colors: palette }), 450);
+
+    // rising balloon
+    launchBalloon();
+  };
+
+  const launchBalloon = () => {
+    const emojis = ["🎈", "✨", "💛", "🌟", "🎉", "🦆"];
+    for (let i = 0; i < 8; i++) {
+      const el = document.createElement("div");
+      el.textContent = emojis[(Math.random() * emojis.length) | 0];
+      const startX = 20 + Math.random() * (window.innerWidth - 40);
+      el.style.cssText = `position:fixed;left:${startX}px;bottom:-40px;font-size:${28 + Math.random() * 24}px;pointer-events:none;z-index:9998;transition:transform 3200ms cubic-bezier(.2,.7,.3,1),opacity 3200ms ease-out;`;
+      document.body.appendChild(el);
+      requestAnimationFrame(() => {
+        el.style.transform = `translate(${(Math.random() - 0.5) * 200}px, -${window.innerHeight + 80}px) rotate(${(Math.random() - 0.5) * 60}deg)`;
+        el.style.opacity = "0";
+      });
+      setTimeout(() => el.remove(), 3300);
+    }
   };
 
   const tapes = ["-2deg", "1.5deg", "-1deg", "2.5deg", "-2.5deg", "1deg"];
@@ -1026,10 +1055,10 @@ function WishesWall() {
             {wishes.map((w, i) => (
               <div
                 key={w.id}
-                className="relative bg-card border-2 border-foreground rounded-xl p-5 shadow-[4px_4px_0_0_rgba(0,0,0,1)] text-left animate-pop"
+                className={`relative bg-card border-2 border-foreground rounded-xl p-5 shadow-[4px_4px_0_0_rgba(0,0,0,1)] text-left transition-transform hover:-translate-y-1 hover:rotate-0 ${w.id === justPinned ? "animate-slam" : "animate-pop"}`}
                 style={{ transform: `rotate(${tapes[i % tapes.length]})` }}
               >
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-5 bg-accent/70 border border-foreground/30" />
+                <div className={`absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-5 bg-accent/70 border border-foreground/30 ${w.id === justPinned ? "animate-tape" : ""}`} />
                 <p className="font-script text-xl leading-snug">"{w.text}"</p>
                 <p className="mt-3 text-xs uppercase tracking-widest text-foreground/60">— {w.from}</p>
               </div>
