@@ -941,7 +941,7 @@ function Index() {
       <PinkMoodSection />
       <DoorwaySection />
       <FieldSection />
-      <WishesWall />
+      <MoodBoard />
       <ChildhoodVault />
       <Footer />
     </main>
@@ -1058,61 +1058,17 @@ function SparkleCursor() {
   return null;
 }
 
-function WishesWall() {
-  const [wishes, setWishes] = useState<{ id: number; text: string; from: string }[]>([]);
-  const [text, setText] = useState("");
-  const [from, setFrom] = useState("");
-  const [justPinned, setJustPinned] = useState<number | null>(null);
+const BOARD = [
+  { src: roopa1, cap: "royal energy", rot: "-3deg" },
+  { src: roopaMyDay, cap: "that smile though", rot: "2.5deg" },
+  { src: roopa3, cap: "golden detail", rot: "-1.5deg" },
+  { src: roopaPinkCollage, cap: "pink era", rot: "3deg" },
+  { src: roopa4, cap: "self love", rot: "-2deg" },
+  { src: roopa2, cap: "black saree classic", rot: "1.5deg" },
+];
+
+function MoodBoard() {
   const { ref, shown } = useReveal();
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem("roopa-wishes");
-      if (raw) setWishes(JSON.parse(raw));
-    } catch {}
-  }, []);
-
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!text.trim()) return;
-    const id = Date.now();
-    const next = [{ id, text: text.trim().slice(0, 140), from: (from.trim() || "anonymous").slice(0, 30) }, ...wishes].slice(0, 40);
-    setWishes(next);
-    try { localStorage.setItem("roopa-wishes", JSON.stringify(next)); } catch {}
-    setText("");
-    setFrom("");
-    setJustPinned(id);
-    setTimeout(() => setJustPinned(null), 1400);
-
-    // multi-burst confetti
-    const palette = ["#FFE94A", "#FF8C00", "#ffffff", "#FFD700", "#FF69B4"];
-    confetti({ particleCount: 120, spread: 90, startVelocity: 55, origin: { y: 0.7 }, colors: palette });
-    setTimeout(() => confetti({ particleCount: 80, angle: 60, spread: 70, origin: { x: 0, y: 0.8 }, colors: palette }), 150);
-    setTimeout(() => confetti({ particleCount: 80, angle: 120, spread: 70, origin: { x: 1, y: 0.8 }, colors: palette }), 300);
-    setTimeout(() => confetti({ particleCount: 60, spread: 120, scalar: 1.4, shapes: ["star"], origin: { y: 0.6 }, colors: palette }), 450);
-
-    // rising balloon
-    launchBalloon();
-  };
-
-  const launchBalloon = () => {
-    const emojis = ["🎈", "✨", "💛", "🌟", "🎉", "🦆"];
-    for (let i = 0; i < 8; i++) {
-      const el = document.createElement("div");
-      el.textContent = emojis[(Math.random() * emojis.length) | 0];
-      const startX = 20 + Math.random() * (window.innerWidth - 40);
-      el.style.cssText = `position:fixed;left:${startX}px;bottom:-40px;font-size:${28 + Math.random() * 24}px;pointer-events:none;z-index:9998;transition:transform 3200ms cubic-bezier(.2,.7,.3,1),opacity 3200ms ease-out;`;
-      document.body.appendChild(el);
-      requestAnimationFrame(() => {
-        el.style.transform = `translate(${(Math.random() - 0.5) * 200}px, -${window.innerHeight + 80}px) rotate(${(Math.random() - 0.5) * 60}deg)`;
-        el.style.opacity = "0";
-      });
-      setTimeout(() => el.remove(), 3300);
-    }
-  };
-
-  const tapes = ["-2deg", "1.5deg", "-1deg", "2.5deg", "-2.5deg", "1deg"];
-
   return (
     <section ref={ref as any} className="relative bg-background py-20 md:py-32 px-5 md:px-8 overflow-hidden">
       <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, var(--foreground) 1px, transparent 1px)", backgroundSize: "22px 22px" }} />
@@ -1122,53 +1078,35 @@ function WishesWall() {
         <Duck size={54} />
       </div>
 
-      <div className={`max-w-5xl mx-auto text-center transition-all duration-1000 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-        <div className="font-script text-accent text-2xl md:text-4xl">leave her a note —</div>
+      <div className="max-w-6xl mx-auto text-center">
+        <div className="font-script text-accent text-2xl md:text-4xl">the whole collection —</div>
         <h2 className="font-display text-[clamp(2.5rem,9vw,7rem)] leading-[0.9] mt-2">
-          THE <span className="text-accent">WISHES</span> WALL
+          THE <span className="text-accent">MOOD</span> BOARD
         </h2>
-        <p className="mt-4 max-w-xl mx-auto text-foreground/70 text-sm md:text-base">
-          drop a wish, a memory, a compliment — it sticks to the wall forever (well, on your device 😉).
+        <p className="mt-4 max-w-xl mx-auto text-foreground/70 text-sm md:text-base uppercase tracking-[0.25em] text-xs">
+          every frame, pinned in one place
         </p>
 
-        <form onSubmit={submit} className="mt-10 max-w-2xl mx-auto bg-card border-2 border-foreground rounded-2xl p-5 md:p-6 shadow-[6px_6px_0_0_rgba(0,0,0,1)] text-left">
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="write something ridiculously kind..."
-            maxLength={140}
-            rows={3}
-            className="w-full bg-transparent outline-none font-script text-xl md:text-2xl resize-none placeholder:text-foreground/40"
-          />
-          <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center mt-3 pt-3 border-t border-foreground/20">
-            <input
-              value={from}
-              onChange={(e) => setFrom(e.target.value)}
-              placeholder="— your name"
-              maxLength={30}
-              className="flex-1 bg-transparent outline-none text-sm md:text-base placeholder:text-foreground/40"
-            />
-            <button type="submit" className="bg-foreground text-background font-display tracking-wider px-6 py-3 rounded-full hover:bg-accent hover:text-foreground transition-colors">
-              PIN IT ✦
-            </button>
-          </div>
-        </form>
-
-        {wishes.length > 0 && (
-          <div className="mt-14 grid gap-5 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {wishes.map((w, i) => (
-              <div
-                key={w.id}
-                className={`relative bg-card border-2 border-foreground rounded-xl p-5 shadow-[4px_4px_0_0_rgba(0,0,0,1)] text-left transition-transform hover:-translate-y-1 hover:rotate-0 ${w.id === justPinned ? "animate-slam" : "animate-pop"}`}
-                style={{ transform: `rotate(${tapes[i % tapes.length]})` }}
-              >
-                <div className={`absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-5 bg-accent/70 border border-foreground/30 ${w.id === justPinned ? "animate-tape" : ""}`} />
-                <p className="font-script text-xl leading-snug">"{w.text}"</p>
-                <p className="mt-3 text-xs uppercase tracking-widest text-foreground/60">— {w.from}</p>
+        <div className="mt-14 grid gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {BOARD.map((b, i) => (
+            <figure
+              key={i}
+              className={`group relative bg-card border-2 border-foreground rounded-xl p-3 pb-5 shadow-[6px_6px_0_0_rgba(0,0,0,1)] transition-all duration-700 hover:-translate-y-2 hover:rotate-0 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+              style={{ transform: `rotate(${b.rot})`, transitionDelay: `${i * 90}ms` }}
+            >
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-accent/70 border border-foreground/30" />
+              <div className="overflow-hidden rounded-md bg-foreground/5">
+                <img
+                  src={typeof b.src === "string" ? b.src : (b.src as any).url}
+                  alt={`Roopa — ${b.cap}`}
+                  loading="lazy"
+                  className="w-full h-[320px] md:h-[380px] object-contain object-top transition-transform duration-700 group-hover:scale-[1.04]"
+                />
               </div>
-            ))}
-          </div>
-        )}
+              <figcaption className="mt-3 font-script text-xl">{b.cap}</figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
     </section>
   );
