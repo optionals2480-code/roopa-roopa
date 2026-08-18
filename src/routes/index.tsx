@@ -932,8 +932,10 @@ function Index() {
       <SparkleCursor />
       <Hero />
       <QuotesSection />
+      <AnonymousLetter />
       <DuoSection />
       <Gallery />
+      <ReasonsSection />
       <SurpriseSection />
       <PolaroidDiary />
       <PinkMoodSection />
@@ -943,6 +945,91 @@ function Index() {
       <ChildhoodVault />
       <Footer />
     </main>
+  );
+}
+
+const LETTER =
+  "i'm not going to sign this. you don't need a name, and honestly a name would only make it smaller. all i wanted to say is this: your birthday is every single day i get to see you. the world is a little louder, a little warmer, a little more worth showing up for — because you're in it. keep laughing like that. keep glowing like that. stay outrageously, unapologetically you.";
+
+function AnonymousLetter() {
+  const { ref, shown } = useReveal();
+  const [typed, setTyped] = useState("");
+  useEffect(() => {
+    if (!shown) return;
+    let i = 0;
+    const id = setInterval(() => {
+      i += 2;
+      setTyped(LETTER.slice(0, i));
+      if (i >= LETTER.length) clearInterval(id);
+    }, 22);
+    return () => clearInterval(id);
+  }, [shown]);
+
+  return (
+    <section ref={ref as any} className="relative bg-background py-20 md:py-32 px-5 md:px-6 overflow-hidden">
+      <Sparkle className="absolute top-10 left-10 text-accent animate-twinkle" size={26} />
+      <Sparkle className="absolute bottom-10 right-12 text-foreground/40 animate-twinkle" size={20} />
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-8">
+          <div className="font-script text-accent text-2xl md:text-3xl">a letter with no name on it</div>
+          <h2 className="font-display text-foreground text-[clamp(2rem,7vw,5rem)] leading-none">UNSIGNED, BUT TRUE</h2>
+        </div>
+        <div className={`relative bg-card border-2 border-foreground rounded-2xl p-6 md:p-12 shadow-[10px_10px_0_0_rgba(0,0,0,1)] rotate-[-1deg] transition-all duration-1000 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+          <div className="absolute -top-4 left-1/2 h-8 w-40 bg-accent/70 border border-foreground/30 animate-tape" />
+          <p className="font-script text-2xl md:text-4xl leading-snug text-foreground/90 min-h-[12rem] md:min-h-[16rem]">
+            {typed}
+            <span className="inline-block w-[2px] h-[1em] align-middle bg-accent ml-1 animate-twinkle" />
+          </p>
+          <div className="mt-8 flex items-center justify-between gap-4">
+            <div className="animate-wiggle"><Duck size={44} /></div>
+            <p className="font-display text-foreground/70 text-lg md:text-2xl tracking-wide">— someone who noticed.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ReasonCard({ text, i }: { text: string; i: number }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <button
+      onClick={() => setOpen((o) => !o)}
+      className="group relative h-40 md:h-44 [perspective:1000px] text-left"
+      aria-label={`reason ${i + 1}`}
+    >
+      <div
+        className={`relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d] ${open ? "[transform:rotateY(180deg)]" : ""}`}
+      >
+        <div className="absolute inset-0 [backface-visibility:hidden] rounded-2xl border-2 border-background/40 bg-background/10 backdrop-blur-sm flex flex-col items-center justify-center gap-2 group-hover:-translate-y-1 transition-transform">
+          <span className="font-display text-4xl md:text-5xl text-accent">{String(i + 1).padStart(2, "0")}</span>
+          <span className="text-[10px] uppercase tracking-[0.3em] text-background/70">tap to open</span>
+        </div>
+        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl border-2 border-accent bg-accent text-foreground p-4 flex items-center justify-center text-center">
+          <span className="font-script text-xl md:text-2xl leading-tight">{text}</span>
+        </div>
+      </div>
+    </button>
+  );
+}
+
+function ReasonsSection() {
+  const { ref, shown } = useReveal();
+  return (
+    <section ref={ref as any} className="relative bg-foreground text-background py-20 md:py-32 px-5 md:px-6 overflow-hidden">
+      <div className={`max-w-6xl mx-auto transition-all duration-1000 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+        <div className="text-center mb-12">
+          <div className="font-script text-accent text-2xl md:text-3xl">no names, just reasons</div>
+          <h2 className="font-display text-[clamp(2.2rem,8vw,6.5rem)] leading-none">WHY YOU'RE THE BEST</h2>
+          <p className="mt-4 text-background/70 text-sm md:text-base">flip a card. every one of them is true.</p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          {REASONS.map((r, i) => (
+            <ReasonCard key={r} text={r} i={i} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
