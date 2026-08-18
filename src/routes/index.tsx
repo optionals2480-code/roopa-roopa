@@ -18,15 +18,32 @@ export const Route = createFileRoute("/")({
 });
 
 const QUOTES = [
-  { text: "Another trip around the sun, and you're still the main character.", by: "— for the queen herself" },
-  { text: "On your day, the universe pauses just to clap a little louder.", by: "— a quiet truth" },
+  { text: "Your birthday is every day — at least on the days I get to see you.", by: "— someone who counts them" },
+  { text: "Some people have a day. You have a whole season named after you.", by: "— a quiet truth" },
   { text: "You're the kind of friend the universe shows off about.", by: "— and we agree" },
   { text: "Stay golden, stay glowing, stay outrageously you.", by: "— forever rule" },
-  { text: "Cheers to the chaos, the laughter, and another year of you.", by: "— with all the love" },
+  { text: "Cheers to the chaos, the laughter, and every version of you.", by: "— with all the love" },
   { text: "She's more beautiful than the sunset knows how to be.", by: "— and the sky agrees" },
   { text: "No one does it better. No one ever will. It's just a roopa thing.", by: "— scientifically proven" },
   { text: "Prettier than every poem ever written, softer than every song.", by: "— facts only" },
   { text: "The world tried to make a better version of you. It failed. Loudly.", by: "— case closed" },
+  { text: "If smiles were currency, you'd have quietly bought the whole city.", by: "— an unnamed admirer" },
+  { text: "You don't need a candle to make a wish. You are somebody's wish.", by: "— anonymous" },
+  { text: "Somewhere out here, someone is glad you exist and never said it out loud. Until now.", by: "— guess who" },
+  { text: "Every good day looks a little like you.", by: "— unsigned" },
+  { text: "You laugh, and suddenly the room decides to behave.", by: "— observed, repeatedly" },
+  { text: "There is no better. There is only you, and then a long empty list.", by: "— sincerely" },
+];
+
+const REASONS = [
+  "the laugh that ruins everyone's bad mood",
+  "the way you make ordinary days feel like an occasion",
+  "that stubborn kindness of yours",
+  "you remember the small things nobody else does",
+  "the golden hour follows you around",
+  "you're impossible to replace and easy to love",
+  "your smile does more work than the sun",
+  "you make silence comfortable and noise fun",
 ];
 
 function useReveal() {
