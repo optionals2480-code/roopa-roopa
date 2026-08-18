@@ -196,7 +196,7 @@ function Chapter({ data, index }: { data: typeof CHAPTERS[number]; index: number
 }
 
 function Marquee() {
-  const words = ["ROOPA", "✦", "BIRTHDAY GIRL", "✦", "ICON", "✦", "MAIN CHARACTER", "✦", "GOLDEN", "✦"];
+  const words = ["ROOPA", "✦", "EVERY DAY IS YOURS", "✦", "ICON", "✦", "MAIN CHARACTER", "✦", "GOLDEN", "✦"];
   const loop = [...words, ...words, ...words];
   return (
     <div className="relative bg-foreground text-background py-6 overflow-hidden border-y-2 border-accent">
@@ -274,11 +274,11 @@ function HeroInner() {
         </div>
       </div>
 
-      {/* date box */}
+      {/* anonymous stamp */}
       <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6 z-20">
-        <div className="border-2 border-foreground/80 bg-background/60 backdrop-blur-sm px-3 py-2 md:px-4 md:py-3 rounded-md">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-foreground/70">The Big Day</div>
-          <div className="font-display text-foreground text-xl md:text-2xl mt-1">[ DATE TBD ]</div>
+        <div className="border-2 border-foreground/80 bg-background/60 backdrop-blur-sm px-3 py-2 md:px-4 md:py-3 rounded-md rotate-[-4deg] animate-pop">
+          <div className="text-[10px] uppercase tracking-[0.3em] text-foreground/70">From</div>
+          <div className="font-display text-foreground text-xl md:text-2xl mt-1">[ ANONYMOUS ]</div>
         </div>
       </div>
 
@@ -369,7 +369,7 @@ function SurpriseSection() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/70 backdrop-blur-sm p-6" onClick={() => setOpen(false)}>
           <div className="bg-background border-4 border-foreground rounded-2xl p-10 max-w-md text-center relative" onClick={(e) => e.stopPropagation()}>
             <div className="flex justify-center mb-4 animate-spin-slow"><Duck size={120} /></div>
-            <h3 className="font-display text-foreground text-4xl">HAPPY BIRTHDAY,<br />ROOPA!</h3>
+            <h3 className="font-display text-foreground text-4xl">EVERY DAY IS<br />ROOPA DAY!</h3>
             <p className="font-script text-2xl text-foreground/80 mt-4">
               May your year be loud with laughter, soft with love, and full of tiny golden moments.
             </p>
@@ -863,7 +863,7 @@ function FooterInner() {
           <div className="animate-wiggle"><Duck size={42} /></div>
           <p className="font-script text-xl md:text-2xl">Made with chaos, ducks & love — for Roopa.</p>
         </div>
-        <p className="text-[10px] uppercase tracking-[0.4em] text-background/60">a birthday tribute · [ date tbd ]</p>
+        <p className="text-[10px] uppercase tracking-[0.4em] text-background/60">an anonymous tribute · sender unknown</p>
       </div>
     </footer>
   );
