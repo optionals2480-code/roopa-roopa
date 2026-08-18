@@ -18,15 +18,32 @@ export const Route = createFileRoute("/")({
 });
 
 const QUOTES = [
-  { text: "Another trip around the sun, and you're still the main character.", by: "— for the queen herself" },
-  { text: "On your day, the universe pauses just to clap a little louder.", by: "— a quiet truth" },
+  { text: "Your birthday is every day — at least on the days I get to see you.", by: "— someone who counts them" },
+  { text: "Some people have a day. You have a whole season named after you.", by: "— a quiet truth" },
   { text: "You're the kind of friend the universe shows off about.", by: "— and we agree" },
   { text: "Stay golden, stay glowing, stay outrageously you.", by: "— forever rule" },
-  { text: "Cheers to the chaos, the laughter, and another year of you.", by: "— with all the love" },
+  { text: "Cheers to the chaos, the laughter, and every version of you.", by: "— with all the love" },
   { text: "She's more beautiful than the sunset knows how to be.", by: "— and the sky agrees" },
   { text: "No one does it better. No one ever will. It's just a roopa thing.", by: "— scientifically proven" },
   { text: "Prettier than every poem ever written, softer than every song.", by: "— facts only" },
   { text: "The world tried to make a better version of you. It failed. Loudly.", by: "— case closed" },
+  { text: "If smiles were currency, you'd have quietly bought the whole city.", by: "— an unnamed admirer" },
+  { text: "You don't need a candle to make a wish. You are somebody's wish.", by: "— anonymous" },
+  { text: "Somewhere out here, someone is glad you exist and never said it out loud. Until now.", by: "— guess who" },
+  { text: "Every good day looks a little like you.", by: "— unsigned" },
+  { text: "You laugh, and suddenly the room decides to behave.", by: "— observed, repeatedly" },
+  { text: "There is no better. There is only you, and then a long empty list.", by: "— sincerely" },
+];
+
+const REASONS = [
+  "the laugh that ruins everyone's bad mood",
+  "the way you make ordinary days feel like an occasion",
+  "that stubborn kindness of yours",
+  "you remember the small things nobody else does",
+  "the golden hour follows you around",
+  "you're impossible to replace and easy to love",
+  "your smile does more work than the sun",
+  "you make silence comfortable and noise fun",
 ];
 
 function useReveal() {
@@ -179,7 +196,7 @@ function Chapter({ data, index }: { data: typeof CHAPTERS[number]; index: number
 }
 
 function Marquee() {
-  const words = ["ROOPA", "✦", "BIRTHDAY GIRL", "✦", "ICON", "✦", "MAIN CHARACTER", "✦", "GOLDEN", "✦"];
+  const words = ["ROOPA", "✦", "EVERY DAY IS YOURS", "✦", "ICON", "✦", "MAIN CHARACTER", "✦", "GOLDEN", "✦"];
   const loop = [...words, ...words, ...words];
   return (
     <div className="relative bg-foreground text-background py-6 overflow-hidden border-y-2 border-accent">
@@ -257,11 +274,11 @@ function HeroInner() {
         </div>
       </div>
 
-      {/* date box */}
+      {/* anonymous stamp */}
       <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6 z-20">
-        <div className="border-2 border-foreground/80 bg-background/60 backdrop-blur-sm px-3 py-2 md:px-4 md:py-3 rounded-md">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-foreground/70">The Big Day</div>
-          <div className="font-display text-foreground text-xl md:text-2xl mt-1">[ DATE TBD ]</div>
+        <div className="border-2 border-foreground/80 bg-background/60 backdrop-blur-sm px-3 py-2 md:px-4 md:py-3 rounded-md rotate-[-4deg] animate-pop">
+          <div className="text-[10px] uppercase tracking-[0.3em] text-foreground/70">From</div>
+          <div className="font-display text-foreground text-xl md:text-2xl mt-1">[ ANONYMOUS ]</div>
         </div>
       </div>
 
@@ -352,7 +369,7 @@ function SurpriseSection() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/70 backdrop-blur-sm p-6" onClick={() => setOpen(false)}>
           <div className="bg-background border-4 border-foreground rounded-2xl p-10 max-w-md text-center relative" onClick={(e) => e.stopPropagation()}>
             <div className="flex justify-center mb-4 animate-spin-slow"><Duck size={120} /></div>
-            <h3 className="font-display text-foreground text-4xl">HAPPY BIRTHDAY,<br />ROOPA!</h3>
+            <h3 className="font-display text-foreground text-4xl">EVERY DAY IS<br />ROOPA DAY!</h3>
             <p className="font-script text-2xl text-foreground/80 mt-4">
               May your year be loud with laughter, soft with love, and full of tiny golden moments.
             </p>
@@ -846,7 +863,7 @@ function FooterInner() {
           <div className="animate-wiggle"><Duck size={42} /></div>
           <p className="font-script text-xl md:text-2xl">Made with chaos, ducks & love — for Roopa.</p>
         </div>
-        <p className="text-[10px] uppercase tracking-[0.4em] text-background/60">a birthday tribute · [ date tbd ]</p>
+        <p className="text-[10px] uppercase tracking-[0.4em] text-background/60">an anonymous tribute · sender unknown</p>
       </div>
     </footer>
   );
@@ -915,8 +932,10 @@ function Index() {
       <SparkleCursor />
       <Hero />
       <QuotesSection />
+      <AnonymousLetter />
       <DuoSection />
       <Gallery />
+      <ReasonsSection />
       <SurpriseSection />
       <PolaroidDiary />
       <PinkMoodSection />
@@ -926,6 +945,91 @@ function Index() {
       <ChildhoodVault />
       <Footer />
     </main>
+  );
+}
+
+const LETTER =
+  "i'm not going to sign this. you don't need a name, and honestly a name would only make it smaller. all i wanted to say is this: your birthday is every single day i get to see you. the world is a little louder, a little warmer, a little more worth showing up for — because you're in it. keep laughing like that. keep glowing like that. stay outrageously, unapologetically you.";
+
+function AnonymousLetter() {
+  const { ref, shown } = useReveal();
+  const [typed, setTyped] = useState("");
+  useEffect(() => {
+    if (!shown) return;
+    let i = 0;
+    const id = setInterval(() => {
+      i += 2;
+      setTyped(LETTER.slice(0, i));
+      if (i >= LETTER.length) clearInterval(id);
+    }, 22);
+    return () => clearInterval(id);
+  }, [shown]);
+
+  return (
+    <section ref={ref as any} className="relative bg-background py-20 md:py-32 px-5 md:px-6 overflow-hidden">
+      <Sparkle className="absolute top-10 left-10 text-accent animate-twinkle" size={26} />
+      <Sparkle className="absolute bottom-10 right-12 text-foreground/40 animate-twinkle" size={20} />
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-8">
+          <div className="font-script text-accent text-2xl md:text-3xl">a letter with no name on it</div>
+          <h2 className="font-display text-foreground text-[clamp(2rem,7vw,5rem)] leading-none">UNSIGNED, BUT TRUE</h2>
+        </div>
+        <div className={`relative bg-card border-2 border-foreground rounded-2xl p-6 md:p-12 shadow-[10px_10px_0_0_rgba(0,0,0,1)] rotate-[-1deg] transition-all duration-1000 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+          <div className="absolute -top-4 left-1/2 h-8 w-40 bg-accent/70 border border-foreground/30 animate-tape" />
+          <p className="font-script text-2xl md:text-4xl leading-snug text-foreground/90 min-h-[12rem] md:min-h-[16rem]">
+            {typed}
+            <span className="inline-block w-[2px] h-[1em] align-middle bg-accent ml-1 animate-twinkle" />
+          </p>
+          <div className="mt-8 flex items-center justify-between gap-4">
+            <div className="animate-wiggle"><Duck size={44} /></div>
+            <p className="font-display text-foreground/70 text-lg md:text-2xl tracking-wide">— someone who noticed.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ReasonCard({ text, i }: { text: string; i: number }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <button
+      onClick={() => setOpen((o) => !o)}
+      className="group relative h-40 md:h-44 [perspective:1000px] text-left"
+      aria-label={`reason ${i + 1}`}
+    >
+      <div
+        className={`relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d] ${open ? "[transform:rotateY(180deg)]" : ""}`}
+      >
+        <div className="absolute inset-0 [backface-visibility:hidden] rounded-2xl border-2 border-background/40 bg-background/10 backdrop-blur-sm flex flex-col items-center justify-center gap-2 group-hover:-translate-y-1 transition-transform">
+          <span className="font-display text-4xl md:text-5xl text-accent">{String(i + 1).padStart(2, "0")}</span>
+          <span className="text-[10px] uppercase tracking-[0.3em] text-background/70">tap to open</span>
+        </div>
+        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl border-2 border-accent bg-accent text-foreground p-4 flex items-center justify-center text-center">
+          <span className="font-script text-xl md:text-2xl leading-tight">{text}</span>
+        </div>
+      </div>
+    </button>
+  );
+}
+
+function ReasonsSection() {
+  const { ref, shown } = useReveal();
+  return (
+    <section ref={ref as any} className="relative bg-foreground text-background py-20 md:py-32 px-5 md:px-6 overflow-hidden">
+      <div className={`max-w-6xl mx-auto transition-all duration-1000 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+        <div className="text-center mb-12">
+          <div className="font-script text-accent text-2xl md:text-3xl">no names, just reasons</div>
+          <h2 className="font-display text-[clamp(2.2rem,8vw,6.5rem)] leading-none">WHY YOU'RE THE BEST</h2>
+          <p className="mt-4 text-background/70 text-sm md:text-base">flip a card. every one of them is true.</p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          {REASONS.map((r, i) => (
+            <ReasonCard key={r} text={r} i={i} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
