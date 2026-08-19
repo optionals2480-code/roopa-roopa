@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { ContentGuard } from "@/components/ContentGuard";
 
 function NotFoundComponent() {
   return (
@@ -117,6 +118,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ContentGuard />
       <Outlet />
     </QueryClientProvider>
   );

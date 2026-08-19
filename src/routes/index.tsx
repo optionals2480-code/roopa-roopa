@@ -1087,23 +1087,30 @@ function MoodBoard() {
           every frame, pinned in one place
         </p>
 
-        <div className="mt-14 grid gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid gap-10 md:gap-14 grid-cols-2 lg:grid-cols-3 justify-items-center">
           {BOARD.map((b, i) => (
             <figure
               key={i}
-              className={`group relative bg-card border-2 border-foreground rounded-xl p-3 pb-5 shadow-[6px_6px_0_0_rgba(0,0,0,1)] transition-all duration-700 hover:-translate-y-2 hover:rotate-0 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-              style={{ transform: `rotate(${b.rot})`, transitionDelay: `${i * 90}ms` }}
+              className={`group relative flex flex-col items-center transition-all duration-700 ${shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+              style={{ transitionDelay: `${i * 90}ms` }}
             >
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-accent/70 border border-foreground/30" />
-              <div className="overflow-hidden rounded-md bg-foreground/5">
-                <img
-                  src={typeof b.src === "string" ? b.src : (b.src as any).url}
-                  alt={`Roopa — ${b.cap}`}
-                  loading="lazy"
-                  className="w-full h-[320px] md:h-[380px] object-contain object-top transition-transform duration-700 group-hover:scale-[1.04]"
-                />
+              <div
+                className="relative rounded-full p-[6px] bg-accent/80 shadow-[0_18px_50px_-10px_rgba(0,0,0,0.75)] transition-transform duration-700 group-hover:-translate-y-2 group-hover:rotate-0"
+                style={{ transform: `rotate(${b.rot})` }}
+              >
+                <div className="relative w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-foreground bg-foreground/10">
+                  <img
+                    src={typeof b.src === "string" ? b.src : (b.src as any).url}
+                    alt={`Roopa — ${b.cap}`}
+                    loading="lazy"
+                    draggable={false}
+                    className="w-full h-full object-cover object-top select-none transition-transform duration-700 group-hover:scale-[1.08]"
+                  />
+                  <div className="pointer-events-none absolute inset-0 rounded-full shadow-[inset_0_0_45px_18px_rgba(0,0,0,0.55)]" />
+                </div>
+                <Sparkle className="absolute -top-3 -right-2 text-foreground animate-twinkle" size={20} />
               </div>
-              <figcaption className="mt-3 font-script text-xl">{b.cap}</figcaption>
+              <figcaption className="mt-4 font-script text-xl md:text-2xl">{b.cap}</figcaption>
             </figure>
           ))}
         </div>
