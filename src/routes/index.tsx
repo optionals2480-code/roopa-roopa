@@ -681,7 +681,8 @@ function FieldSection() {
         />
         {/* edge-only vignette; never covers face */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-foreground to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-foreground via-foreground/70 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-foreground via-foreground/85 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-foreground/95 to-transparent" />
 
         <Sparkle className="absolute top-[5%] left-[5%] text-accent animate-twinkle" size={30} />
         <Sparkle className="absolute top-[9%] right-[6%] text-background animate-twinkle" size={22} />
